@@ -1,0 +1,33 @@
+#!/usr/bin/env php
+<?php
+
+// 定義時區
+date_default_timezone_set('Asia/Taipei');
+
+// 定義常數
+define('MAPLE_CMD', true);
+define('VERSION', '7.1.0');
+define('DIR', realpath(getcwd()) . DIRECTORY_SEPARATOR);
+
+// 定義臨時用 Error Handler
+function tmpErr($err) { echo "\n 錯誤，" . $err . "\n\n"; exit(1); }
+
+// 載入 Entry
+$entry = @file_get_contents($path = DIR . 'System' . DIRECTORY_SEPARATOR . 'Entry.php');
+$entry && preg_match_all('/define\s*\((["\'])(?P<kv>(?>[^"\'\\\]++|\\\.|(?!\1)["\'])*)\1?/', $entry, $entry) && $entry['kv'] && in_array('MAPLE', $entry['kv']) || tmpErr('這不是 Maple 7 框架的專案吧！');
+include_once $path;
+
+// 載入 Lib
+Load::systemLib('Cmd')   ?: tmpErr('載入 System/Lib/Cmd 失敗！');
+
+// 取得參數
+$file    = array_shift($argv);
+$feature = strtolower(array_shift($argv));
+$action  = strtolower(array_shift($argv));
+
+// 指令模式
+$feature === 'migration' && in_array($action, ['new', 'ori', 'now']) && \CMD\Migration\Cli::get($action);
+$feature === 'clean'     && in_array($action, ['cache', 'tmp'])      && \CMD\Clean\Cli::get($action);
+
+// GUI 模式
+\CMD\Layout\Gui::get($feature);
