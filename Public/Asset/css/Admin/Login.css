@@ -1,0 +1,60 @@
+@charset "UTF-8";
+*, *:after, *:before { vertical-align: top; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; -moz-osx-font-smoothing: subpixel-antialiased; -webkit-font-smoothing: subpixel-antialiased; -moz-font-smoothing: subpixel-antialiased; -ms-font-smoothing: subpixel-antialiased; -o-font-smoothing: subpixel-antialiased; }
+
+@font-face { font-family: "icon-AdminLogin"; src: url('../../font/AdminLogin/fonts/icomoon.eot?1562228495') format('embedded-opentype'), url('../../font/AdminLogin/fonts/icomoon.woff?1562228495') format('woff'), url('../../font/AdminLogin/fonts/icomoon.ttf?1562228495') format('truetype'), url('../../font/AdminLogin/fonts/icomoon.svg?1562228495') format('svg'); }
+html { position: relative; }
+html body { position: relative; display: inline-block; width: 100%; margin: 0; padding: 0; color: #5a5a5a; text-align: center; font-size: medium; font-family: "微軟正黑體", "Open sans", "Helvetica Neue", HelveticaNeue, Helvetica, Arial, sans-serif; background-color: #f4f5f7; }
+html body::-moz-selection { color: white; background-color: #78baff; }
+html body::selection { color: white; background-color: #78baff; }
+
+.icon:before, #login span.failure:before, #login span.success:before, #login label:before { font-family: "icon-AdminLogin"; speak: none; font-style: normal; font-weight: normal; font-variant: normal; }
+
+#main { display: inline-block; width: 100%; margin-top: 32px; }
+#main > span { display: inline-block; width: 100%; height: 22px; line-height: 22px; margin-top: 8px; font-size: 10px; font-weight: 200; }
+#main > span > a { color: #4285f4; display: inline; font-weight: normal; text-decoration: none; -moz-transition: color 0.3s, border-bottom 0.3s; -o-transition: color 0.3s, border-bottom 0.3s; -webkit-transition: color 0.3s, border-bottom 0.3s; transition: color 0.3s, border-bottom 0.3s; }
+#main > span > a.active, #main > span > a:hover { color: #0d5bdd; }
+
+h1 { display: inline-block; width: 100%; text-align: center; font-weight: 150; margin-top: 0; height: 45px; line-height: 45px; }
+h1 .img { display: inline-block; width: 45px; line-height: 45px; -moz-border-radius: 6px; -webkit-border-radius: 6px; border-radius: 6px; position: relative; overflow: hidden; background-color: white; }
+h1 .img img { width: 100%; }
+h1 .img:after { content: ''; position: absolute; left: 0; top: 0; right: 0; bottom: 0; border: 1px solid rgba(0, 0, 0, 0.1); -moz-border-radius: 6px; -webkit-border-radius: 6px; border-radius: 6px; }
+
+#login { display: inline-block; width: 320px; border: 1px solid #d3d6db; background-color: white; padding: 16px 20px; padding-bottom: 32px; overflow: hidden; -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px; }
+#login span { position: relative; display: inline-block; width: 100%; padding: 4px; padding-left: 32px; line-height: 26px; font-size: 14px; text-align: left; margin-bottom: 8px; -moz-border-radius: 2px; -webkit-border-radius: 2px; border-radius: 2px; }
+#login span:empty { display: none; }
+#login span.failure { background-color: #f2dede; color: #a74544; border: 1px solid #eaccd1; }
+#login span.failure:before { content: "\f0004"; }
+#login span.success { background-color: #daedf7; color: #34708d; border: 1px solid #bee8f0; }
+#login span.success:before { content: "\f0003"; }
+#login span:before { position: absolute; left: 0; top: 4px; display: inline-block; width: 32px; text-align: center; }
+#login label { position: relative; display: inline-block; width: 100%; text-align: left; padding-top: 28px; }
+#login label:after, #login label:before { position: absolute; left: 0; display: inline-block; }
+#login label:after { content: attr(data-title); top: 0; width: 100%; height: 28px; line-height: 28px; filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=75); opacity: 0.75; font-size: 14px; }
+#login label:before { top: 33px; width: 36px; height: 26px; line-height: 26px; border-right: 1px solid #e6e6e6; text-align: center; color: #828282; }
+#login label.account:before { content: '\f0001'; }
+#login label.password:before { content: '\f0002'; }
+#login label input { height: 30px; line-height: 27px; color: #787878; font-size: 15px; padding: 0 8px; border: 1px solid #c8c8c8; -moz-border-radius: 2px; -webkit-border-radius: 2px; border-radius: 2px; -moz-transition: box-shadow 0.3s, border-color 0.3s; -o-transition: box-shadow 0.3s, border-color 0.3s; -webkit-transition: box-shadow 0.3s, border-color 0.3s; transition: box-shadow 0.3s, border-color 0.3s; width: 100%; height: 36px; line-height: 36px; padding-left: 42px; }
+#login label input:-moz-placeholder { font-weight: normal; color: #afafaf; font-size: 14.25px; }
+#login label input::-moz-placeholder { font-weight: normal; color: #afafaf; font-size: 14.25px; }
+#login label input:-ms-input-placeholder { font-weight: normal; color: #afafaf; font-size: 14.25px; }
+#login label input::-webkit-input-placeholder { font-weight: normal; color: #afafaf; font-size: 14.25px; }
+#login label input:focus { outline: 0; border: 1px solid #64afeb; -moz-box-shadow: 0 0 8px rgba(100, 175, 235, 0.6); -webkit-box-shadow: 0 0 8px rgba(100, 175, 235, 0.6); box-shadow: 0 0 8px rgba(100, 175, 235, 0.6); }
+#login label input[readonly] { cursor: not-allowed; background-color: #fafafa; border: 1px solid #e1e1e1; }
+#login label input[readonly]:-moz-placeholder { color: #c8c8c8; }
+#login label input[readonly]::-moz-placeholder { color: #c8c8c8; }
+#login label input[readonly]:-ms-input-placeholder { color: #c8c8c8; }
+#login label input[readonly]::-webkit-input-placeholder { color: #c8c8c8; }
+#login label input[readonly]:focus { border: 1px solid #e1e1e1; -moz-box-shadow: none; -webkit-box-shadow: none; box-shadow: none; }
+#login label input[type="file"] { font-size: 10px; padding: 4px; line-height: 0; width: auto; }
+#login label input[type="file"]::-webkit-file-upload-button { display: inline-block; width: auto; height: 20px; line-height: 20px; font-size: 10px; padding-top: 0; padding-bottom: 0; border: 0; cursor: pointer; background-color: #458bf4; color: white; -moz-box-shadow: inset 1px 1px 1px rgba(255, 255, 255, 0.15), inset -1px -1px 1px rgba(0, 0, 0, 0.15); -webkit-box-shadow: inset 1px 1px 1px rgba(255, 255, 255, 0.15), inset -1px -1px 1px rgba(0, 0, 0, 0.15); box-shadow: inset 1px 1px 1px rgba(255, 255, 255, 0.15), inset -1px -1px 1px rgba(0, 0, 0, 0.15); -moz-border-radius: 2px; -webkit-border-radius: 2px; border-radius: 2px; -moz-transition: box-shadow 0.1s; -o-transition: box-shadow 0.1s; -webkit-transition: box-shadow 0.1s; transition: box-shadow 0.1s; }
+#login label input[type="file"]::-webkit-file-upload-button:hover { -moz-box-shadow: inset -1px -1px 2px rgba(0, 0, 0, 0.25), inset 1px 1px 2px rgba(255, 255, 255, 0.25); -webkit-box-shadow: inset -1px -1px 2px rgba(0, 0, 0, 0.25), inset 1px 1px 2px rgba(255, 255, 255, 0.25); box-shadow: inset -1px -1px 2px rgba(0, 0, 0, 0.25), inset 1px 1px 2px rgba(255, 255, 255, 0.25); text-shadow: 0 0 1px rgba(0, 0, 0, 0.25); }
+#login label input[type="file"]::-webkit-file-upload-button:active { -moz-box-shadow: inset 1px 1px 1px rgba(0, 0, 0, 0.1); -webkit-box-shadow: inset 1px 1px 1px rgba(0, 0, 0, 0.1); box-shadow: inset 1px 1px 1px rgba(0, 0, 0, 0.1); }
+#login label input[type="file"]::-webkit-file-upload-button:focus { outline: 0; }
+#login label input[type="file"]::-webkit-file-upload-button[disabled] { cursor: not-allowed; text-shadow: none; -moz-box-shadow: none; -webkit-box-shadow: none; box-shadow: none; background-color: #8db8f8; color: #5d5d5d; }
+#login label input[type='date']::-webkit-datetime-edit { font-size: 15px; }
+#login label + label { margin-top: 12px; }
+#login button { display: inline-block; width: auto; height: 24px; line-height: 24px; font-size: 12px; padding-top: 0; padding-bottom: 0; border: 0; cursor: pointer; background-color: #29ae90; color: white; -moz-box-shadow: inset 1px 1px 1px rgba(255, 255, 255, 0.15), inset -1px -1px 1px rgba(0, 0, 0, 0.15); -webkit-box-shadow: inset 1px 1px 1px rgba(255, 255, 255, 0.15), inset -1px -1px 1px rgba(0, 0, 0, 0.15); box-shadow: inset 1px 1px 1px rgba(255, 255, 255, 0.15), inset -1px -1px 1px rgba(0, 0, 0, 0.15); -moz-border-radius: 2px; -webkit-border-radius: 2px; border-radius: 2px; -moz-transition: box-shadow 0.1s; -o-transition: box-shadow 0.1s; -webkit-transition: box-shadow 0.1s; transition: box-shadow 0.1s; width: 100%; height: 32px; line-height: 32px; font-size: 16px; margin-top: 32px; }
+#login button:hover { -moz-box-shadow: inset -1px -1px 2px rgba(0, 0, 0, 0.25), inset 1px 1px 2px rgba(255, 255, 255, 0.25); -webkit-box-shadow: inset -1px -1px 2px rgba(0, 0, 0, 0.25), inset 1px 1px 2px rgba(255, 255, 255, 0.25); box-shadow: inset -1px -1px 2px rgba(0, 0, 0, 0.25), inset 1px 1px 2px rgba(255, 255, 255, 0.25); text-shadow: 0 0 1px rgba(0, 0, 0, 0.25); }
+#login button:active { -moz-box-shadow: inset 1px 1px 1px rgba(0, 0, 0, 0.1); -webkit-box-shadow: inset 1px 1px 1px rgba(0, 0, 0, 0.1); box-shadow: inset 1px 1px 1px rgba(0, 0, 0, 0.1); }
+#login button:focus { outline: 0; }
+#login button[disabled] { cursor: not-allowed; text-shadow: none; -moz-box-shadow: none; -webkit-box-shadow: none; box-shadow: none; background-color: #4ed5b7; color: white; }
