@@ -1,0 +1,219 @@
+//
+// @author      OA Wu <comdan66@gmail.com>
+// @copyright   Copyright (c) 2015 - 2019, Ginkgo
+// @license     http://opensource.org/licenses/MIT  MIT License
+// @link        https://www.ioa.tw/
+//
+
+@import "Ginkgo";
+@import "compass/css3/font-face";
+
+@include font-face("icon-AdminLogin", font-files(
+  "AdminLogin/fonts/icomoon.eot",
+  "AdminLogin/fonts/icomoon.woff",
+  "AdminLogin/fonts/icomoon.ttf",
+  "AdminLogin/fonts/icomoon.svg"));
+
+html {
+  position: relative;
+
+  body {
+    position: relative;
+
+    display: inline-block;
+    width: 100%;
+
+    margin: 0;
+    padding: 0;
+
+    color: rgba(90, 90, 90, 1.00);
+    text-align: center;
+    font-size: medium;
+    font-family: "微軟正黑體", "Open sans", "Helvetica Neue", HelveticaNeue, Helvetica, Arial, sans-serif;
+    
+    // 文字染色，背景色、文字色
+    @include selection(rgba(120, 186, 255, 1.00), rgba(255, 255, 255, 1));
+    background-color: rgba(244, 245, 247, 1.00);
+  }
+}
+
+.icon:before {
+  font-family: "icon-AdminLogin";
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+}
+
+#main {
+  display: inline-block;
+  width: 100%;
+  margin-top: 32px;
+  
+  > span {
+    display: inline-block;
+    width: 100%;
+    height: 22px;
+    line-height: 22px;
+    margin-top: 8px;
+    font-size: 10px;
+    font-weight: 200;
+    > a {
+      @include a;
+
+    }
+  }
+  
+}
+
+h1 {
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+  font-weight: 150;
+  margin-top: 0;
+  height: 45px;
+  line-height: 45px;
+
+  .img {
+    display: inline-block;
+    width: 45px;
+    line-height: 45px;
+    @include border-radius(6px);
+    position: relative;
+    overflow: hidden;
+    background-color: white;
+
+    img {
+      width: 100%;
+    }
+
+    &:after {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      border: 1px solid rgba(0, 0, 0, .1);
+      @include border-radius(6px);
+    }
+  }
+}
+
+#login {
+  display: inline-block;
+  width: 320px;
+  border: 1px solid rgba(211, 214, 219, 1.00);
+  background-color: rgba(255, 255, 255, 1.00);
+  padding: 16px 20px;
+  padding-bottom: 32px;
+  overflow: hidden;
+  @include border-radius(3px);
+  
+  span {
+    position: relative;
+
+    display: inline-block;
+    width: 100%;
+    padding: 4px;
+    padding-left: 32px;
+    line-height: 26px;
+    font-size: 14px;
+    text-align: left;
+    margin-bottom: 8px;
+    
+    &:empty {
+      display: none;
+    }
+    @include border-radius(2px);
+
+    &.failure {
+      background-color: rgba(242, 222, 222, 1.00);
+      color: rgba(167, 69, 68, 1.00);
+      border: 1px solid rgba(234, 204, 209, 1.00);
+      @extend .icon;
+
+      &:before {
+        content: "\f0004";
+      }
+    }
+    &.success {
+      background-color: rgba(218, 237, 247, 1.00);
+      color: rgba(52, 112, 141, 1.00);
+      border: 1px solid rgba(190, 232, 240, 1.00);
+      @extend .icon;
+      
+      &:before {
+        content: "\f0003";
+      }
+    }
+
+    &:before {
+      position: absolute;
+      left: 0;
+      top: 4px;
+      display: inline-block;
+      width: 32px;
+      text-align: center;
+    }
+  }
+
+  
+  label {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    text-align: left;
+    padding-top: 28px;
+    @extend .icon;
+
+    &:after, &:before {
+      position: absolute;
+      left: 0;
+      display: inline-block;
+    }
+    &:after {
+      content: attr(data-title);
+      top: 0;
+      width: 100%;
+      height: 28px;
+      line-height: 28px;
+
+      @include opacity(.75);
+      font-size: 14px;
+    }
+    &:before {
+      top: 5px + 28px;
+      width: 36px;
+      height: 36px - 5px * 2;
+      line-height: 36px - 5px * 2;
+
+      border-right: 1px solid rgba(230, 230, 230, 1);
+      text-align: center;
+      color: rgba(130, 130, 130, 1);
+    }
+    &.account:before { content: '\f0001'; }
+    &.password:before { content: '\f0002'; }
+
+    input {
+      @include input;
+      width: 100%;
+      height: 36px;
+      line-height: 36px;
+      padding-left: 36px + 6px;
+    }
+    + label {
+      margin-top: 12px;
+    }
+  }
+
+  button {
+    @include button(rgba(41, 174, 144, 1.00));
+    width: 100%;
+    height: 32px;
+    line-height: 32px;
+    font-size: 16px;
+    margin-top: 32px;
+  }
+}

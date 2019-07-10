@@ -1,0 +1,35 @@
+*, *:after, *:before { vertical-align: top; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; -moz-osx-font-smoothing: subpixel-antialiased; -webkit-font-smoothing: subpixel-antialiased; -moz-font-smoothing: subpixel-antialiased; -ms-font-smoothing: subpixel-antialiased; -o-font-smoothing: subpixel-antialiased; }
+
+html body { background-color: #ebebeb; }
+
+#menu-header { background-color: #009688; border-bottom: 1px solid #191b1d; }
+
+#menu { background-color: #262b33; }
+
+#menu-user { margin-top: 24px; }
+
+#footer { background-color: #2c3544; border-top: 1px solid rgba(30, 30, 30, 0.8); }
+#footer:before { content: ''; position: absolute; left: 0; top: 0; display: inline-block; width: 100%; height: 1px; background-color: rgba(255, 255, 255, 0.065); }
+
+#menu-container:before { display: none; }
+#menu-container span { border-bottom: 0 !important; color: #b4b4b4; }
+#menu-container span:hover { color: #d4d5d6; }
+#menu-container span:before { color: #929599; font-size: 22px; }
+#menu-container span:after { font-weight: normal; }
+#menu-container span.active { color: white; font-weight: normal; }
+#menu-container span.active:before { color: white; }
+#menu-container span:not([data-cnt]):after, #menu-container span[data-cnt="0"]:after { filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=50); opacity: 0.5; }
+#menu-container span[data-cnt]:not([data-cnt="0"]):after { -moz-box-shadow: none; -webkit-box-shadow: none; box-shadow: none; }
+#menu-container div { background-color: #1d2026; height: 0; border-bottom: 0 !important; }
+#menu-container div:before { border: 0; background-color: #34373d; z-index: 2; }
+#menu-container div:after { content: ''; position: absolute; left: 0; bottom: 0; display: inline-block; width: 100%; height: 1px; background-color: #34373d; z-index: 2; }
+#menu-container a { z-index: 1; color: #929599; }
+#menu-container a:before { filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=65); opacity: 0.65; }
+#menu-container a:hover:not(.active) { color: white; }
+#menu-container a[data-cnt]:not([data-cnt="0"]):after { -moz-box-shadow: none; -webkit-box-shadow: none; box-shadow: none; }
+
+#hamburger, #logout { color: #787878; }
+#hamburger:hover, #logout:hover { color: #5a5a5a; }
+
+#hamburger { -moz-transition: color 0.3s, background-color 0.3s; -o-transition: color 0.3s, background-color 0.3s; -webkit-transition: color 0.3s, background-color 0.3s; transition: color 0.3s, background-color 0.3s; }
+#hamburger:hover { background-color: gainsboro; }

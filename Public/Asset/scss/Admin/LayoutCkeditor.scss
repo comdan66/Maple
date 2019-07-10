@@ -1,0 +1,140 @@
+//
+// @author      OA Wu <comdan66@gmail.com>
+// @copyright   Copyright (c) 2015 - 2019, Ginkgo
+// @license     http://opensource.org/licenses/MIT  MIT License
+// @link        https://www.ioa.tw/
+//
+
+@import "Ginkgo";
+
+html {
+  position: relative;
+}
+body {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+
+  margin: 0;
+  padding: 0;
+
+  color: rgba(90, 90, 90, 1.00);
+  text-align: center;
+  font-size: medium;
+  font-family: "微軟正黑體", "Open sans", "Helvetica Neue", HelveticaNeue, Helvetica, Arial, sans-serif;
+  
+  // 文字染色，背景色、文字色
+  @include selection(rgba(120, 186, 255, 1.00), rgba(255, 255, 255, 1));
+  background-color: rgba(244, 245, 247, 1.00);
+}
+
+#{elements-of-type(text-input)} {
+  width: 100%;
+  font-size: 14px;
+  color: rgba(65, 65, 65, 1);
+
+  @include input-placeholder {
+    font-size: 13px;
+    font-weight: normal;
+    color: rgba(150, 150, 150, 1);
+  }
+}
+
+input[type='date']::-webkit-datetime-edit {
+  font-size: 13px;
+}
+
+a, label {
+  cursor: pointer;
+}
+
+*[data-bgurl], .background-cover {
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
+#main {
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  padding: 20px;
+  max-width: 1200px;
+  @include range-width(0, 400px) { padding: 10px; }
+}
+
+#imageBrowse {
+  display: inline-block;
+  width: 100%;
+  margin: 0 auto;
+  margin-top: 20px;
+
+  @include clearfix();
+  @include range-width(0, 700px) { margin-top: 16px; }
+  
+  &:before {
+    display: inline-block;
+    width: 100%;
+    height: 44px;
+    line-height: 44px;
+    color: rgba(180, 180, 180, 1);
+    font-style: italic;
+    @include text-shadow(1px 1px 1px white);
+  }
+  &:empty:before {
+    content: '沒有資料';
+  }
+  > * {
+    position: relative;
+    float: left;
+    display: inline-block;
+    width: 200px;
+    height: 200px;
+    margin: 0;
+    cursor: pointer;
+    background-color: white;
+    border: 1px solid rgba(40, 40, 40, .2);
+    border-top: 1px solid rgba(80, 80, 80, .2);
+    border-left: 1px solid rgba(80, 80, 80, .2);
+    @include border-radius(3px);
+    @include transition(border-color .3s);
+
+    @include range-width(0,     400px) { height: 100px; }
+    @include range-width(400px, 450px) { height: 135px; }
+    @include range-width(450px, 700px) { height: 150px; }
+    @include range-width(0,     400px) { $i: 2; width: calc((100% - 8px * #{$i - 1}) / #{$i}); margin-right: 8px; &:nth-child(n + #{$i + 1}) { margin-top: 8px; } &:nth-child(#{$i}n) { margin-right: 0; } }
+    @include range-width(400px, 450px) { $i: 2; width: calc((100% - 12px * #{$i - 1}) / #{$i}); margin-right: 12px; &:nth-child(n + #{$i + 1}) { margin-top: 12px; } &:nth-child(#{$i}n) { margin-right: 0; } }
+    @include range-width(450px, 500px) { $i: 2; width: calc((100% - 12px * #{$i - 1}) / #{$i}); margin-right: 12px; &:nth-child(n + #{$i + 1}) { margin-top: 12px; } &:nth-child(#{$i}n) { margin-right: 0; } }
+    @include range-width(500px, 600px) { $i: 2; width: calc((100% - 16px * #{$i - 1}) / #{$i}); margin-right: 16px; &:nth-child(n + #{$i + 1}) { margin-top: 16px; } &:nth-child(#{$i}n) { margin-right: 0; } }
+    @include range-width(600px, 700px) { $i: 3; width: calc((100% - 16px * #{$i - 1}) / #{$i}); margin-right: 16px; &:nth-child(n + #{$i + 1}) { margin-top: 16px; } &:nth-child(#{$i}n) { margin-right: 0; } }
+    @include range-width(700px, 900px) { $i: 3; width: calc((100% - 20px * #{$i - 1}) / #{$i}); margin-right: 20px; &:nth-child(n + #{$i + 1}) { margin-top: 20px; } &:nth-child(#{$i}n) { margin-right: 0; } }
+    @include range-width(900px, 1200px) { $i: 4; width: calc((100% - 20px * #{$i - 1}) / #{$i}); margin-right: 20px; &:nth-child(n + #{$i + 1}) { margin-top: 20px; } &:nth-child(#{$i}n) { margin-right: 0; } }
+    @include range-width(1200px) { $i: 5; width: calc((100% - 20px * #{$i - 1}) / #{$i}); margin-right: 20px; &:nth-child(n + #{$i + 1}) { margin-top: 20px; } &:nth-child(#{$i}n) { margin-right: 0; } }
+
+    &:after {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      display: inline-block;
+      width: 100%;
+      height: 28px;
+      line-height: 28px;
+      background-color: rgba(0, 0, 0, .3);
+      color: white;
+      @include overflow-docx3();
+      @include opacity(0);
+      @include transition(opacity .3s);
+    }
+    &[data-datetime]:not([data-datetime='']):after {
+      content: attr(data-datetime);
+    }
+    &:hover {
+      border-color: rgba(40, 40, 40, .3);
+      border-top-color: rgba(80, 80, 80, .3);
+      border-left-color: rgba(80, 80, 80, .3);
+      &:after {
+        @include opacity(1);
+      }
+    }
+  }
+}

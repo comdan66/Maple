@@ -1,0 +1,1060 @@
+//
+// @author      OA Wu <comdan66@gmail.com>
+// @copyright   Copyright (c) 2015 - 2019, Ginkgo
+// @license     http://opensource.org/licenses/MIT  MIT License
+// @link        https://www.ioa.tw/
+//
+
+@import "Ginkgo";
+
+@import "compass/css3/font-face";
+
+@include font-face("icon-AdminFrame", font-files(
+  "AdminFrame/fonts/icomoon.eot",
+  "AdminFrame/fonts/icomoon.woff",
+  "AdminFrame/fonts/icomoon.ttf",
+  "AdminFrame/fonts/icomoon.svg"));
+
+$menuWidth: 230px;
+$topHeight: 48px;
+$menuMinWidth: 48px;
+$footerHeight: 32px;
+$maxSubMenu: 10;
+
+html {
+  position: relative;
+}
+body {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+
+  margin: 0;
+  padding: 0;
+
+  color: rgba(90, 90, 90, 1.00);
+  text-align: center;
+  font-size: medium;
+  font-family: "微軟正黑體", "Open sans", "Helvetica Neue", HelveticaNeue, Helvetica, Arial, sans-serif;
+  
+  // 文字染色，背景色、文字色
+  @include selection(rgba(120, 186, 255, 1.00), rgba(255, 255, 255, 1));
+  background-color: rgba(244, 245, 247, 1.00);
+
+  &.mainMax { #main { z-index: 500; } }
+  &.ani {
+    #menu { @include transition(width .3s); }
+    #footer {
+      @include transition(opacity .3s, left .3s);
+    }
+    #menu-header span { @include transition(opacity .3s); }
+    #main { @include transition(padding-left .3s); }
+    #menu-container { span { @include transition(color .3s); &:not([data-cnt]):after, &[data-cnt="0"]:after { @include transition(color .3s, transform .3s); } } div { @include transition(height .3s, opacity .3s); a { @include transition(color .3s); } } }
+  }
+  &.min {
+    #menu { width: $menuMinWidth; height: 100%; overflow-x: hidden; }
+    #footer {
+      left: -$menuWidth;
+      @include opacity(0);
+    }
+    #menu-header span { @include opacity(0); }
+    #menu-user { display: none; }
+    #main { padding-left: $menuMinWidth; }
+    #menu-container {
+      span, a {
+        padding-left: $menuMinWidth;
+        font-size: 0;
+        &:before { width: $menuMinWidth; font-size: 18px; }
+        &[data-cnt]:not([data-cnt="0"]):after { top: 0; right: -2px; @include scale(.65); @include box-shadow(0 1px 1px rgba(0, 0, 0, .4)); }
+        &:not([data-cnt]):after, &[data-cnt="0"]:after { display: none; }
+        &.active + div { overflow: visible; }
+      }
+      div { overflow: hidden; }
+    }
+  }
+}
+
+#{elements-of-type(text-input)} {
+  width: 100%;
+  color: rgba(65, 65, 65, 1);
+
+  border: 0;
+  font-size: 16px;
+  background-color: rgba(247, 247, 247, 1.00);
+  @include border-radius(2px);
+  @include box-shadow(inset 1px 1px 1px rgba(0, 0, 0, .075), inset 0 0 1px rgba(0, 0, 0, .3), 1px 1px 1px white);
+  @include transition(box-shadow .3s);
+
+  &:focus {
+    outline: 0;
+    @include box-shadow(0 0 1px rgba(21, 128, 251, 1.00), 0 0 0 3px rgba(0,123,255,.25));
+  }
+
+  @include input-placeholder {
+    font-weight: normal;
+    color: rgba(180, 180, 180, 1);
+    font-size: 14px;
+    @include text-shadow(1px 1px 1px rgba(255, 255, 255, .85));
+  }
+}
+textarea {
+  resize: none;
+}
+
+input[type='date']::-webkit-datetime-edit {
+  font-size: 13px;
+}
+a, label {
+  cursor: pointer;
+}
+.icon-before:before {
+  font-family: "icon-AdminFrame";
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+}
+.icon-after:after {
+  font-family: "icon-AdminFrame";
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+}
+.scrolling {
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+
+  &::-webkit-scrollbar-thumb {
+    background-color: rgba(146, 149, 153, 1.00);
+    border: 1px solid rgba(38, 43, 51, 1.00);
+    @include border-radius(4px);  
+  }
+  &::-webkit-scrollbar {
+    background-color: rgba(41, 55, 70, 1.00);
+    width: 8px;
+    @include box-shadow(inset -3px 0 3px rgba(39, 40, 34, 1.00));
+  }
+}
+.scrolling-white {
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+
+  &::-webkit-scrollbar-thumb {
+    background-color: rgba(150, 150, 150, 1.00);
+    @include border-radius(4px);  
+  }
+  &::-webkit-scrollbar {
+    background-color: rgba(233, 233, 233, 1);
+    width: 8px;
+  }
+}
+.popbox, .popbox-cover {
+  position: fixed;
+  display: inline-block;
+  top: -99999px;
+  left: -99999px;
+  z-index: -99999;
+  overflow: hidden;
+  background-color: white;
+  @include opacity(0);
+  @include transition(opacity .3s);
+}
+.popbox-cover {
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
+  &[for] {
+    cursor: pointer;
+  }
+}
+
+.background-cover {
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+#main {
+  position: relative;
+  padding-left: $menuWidth;
+  z-index: 200;
+  text-align: left;
+  overflow: hidden;
+  padding-bottom: 40px;
+}
+#main-header {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+
+  height: $topHeight;
+  line-height: $topHeight;
+
+  text-align: center;
+  background-color: rgba(255, 255, 255, 1.00);
+  border-bottom: 1px solid rgba(0, 0, 0, .14);
+  @include clearfix();
+}
+#hamburger, #logout {
+  @extend .icon-before;
+
+  float: left;
+  display: inline-block;
+  width: $topHeight;
+  height: 100%;
+
+  font-size: 24px;
+  text-decoration: none;
+  color: rgba(90, 115, 142, 1.00);
+  @include transition(color .3s);
+  
+  &:hover {
+    color: rgba(35, 82, 124, 1.00);
+  }
+  &:before {
+    content: '\f0001'
+  }
+}
+#logout {
+  font-size: 20px;
+  &:before {
+    content: '\f0002'
+  }
+}
+#nav {
+  float: left;
+
+  position: relative;
+  display: inline-block;
+  width: calc(100% - #{$topHeight} * 2);
+  height: $topHeight;
+
+  padding: 0;
+  margin: 0;
+  padding-right: 100px;
+
+  font-size: 16px;
+  text-align: left;
+  @include overflow-docx3();
+  @include clearfix();
+
+  b {
+    @extend .icon-before;
+    float: left;
+
+    position: relative;
+
+    display: inline-block;
+    height: 22px;
+    line-height: 22px;
+    
+    margin-top: 13px;
+    font-size: 13px;
+    color: rgba(120, 120, 120, 1);
+    margin-left: 2px;
+    font-size: 16px;
+
+    &:before {
+      content: '\f0003';
+      display: none;
+      width: 20px;
+      height: calc(100% - 1px);
+      
+      font-size: 10px;
+      text-align: center;
+      margin-top: 1px;
+    }
+    + *:before {
+      display: inline-block;
+      margin-right: 2px;
+    }
+  }
+
+  label {
+    position: absolute;
+    right: 0;
+    top: 0;
+    display: inline-block;
+    width: 100px;
+    height: 100%;
+    height: $topHeight;
+    text-align: right;
+  }
+
+  @include range-width(0, 600px) {
+    padding-right: 0;
+
+    label {
+      display: none;
+    }
+  }
+}
+#theme {
+  @include input;
+  width: 100%;
+  height: 28px;
+  line-height: 28px;
+  margin-top: ($topHeight - 28px) / 2;
+  color: rgba(75, 75, 75, 1);
+  font-size: 14px;
+}
+#flash {
+  @extend .icon-before;
+
+  position: relative;
+  display: inline-block;
+  width: calc(100% - #{16px * 2});
+  line-height: 18px;
+
+  padding: 8px 8px;
+  padding-left: 30px;
+
+  margin: 0 16px;
+  margin-top: 16px;
+
+  text-align: left;
+  font-size: 15px;
+  border: 1px solid rgba(0, 0, 0, 0);
+  @include word-break(break-all);
+
+  &:before {
+    position: absolute;
+    left: 2px;
+    top: 8px;
+
+    display: inline-block;
+    width: 30px;
+    height: 20px;
+    line-height: 20px;
+
+    text-align: center;
+    margin-right: 4px;
+    font-size: 16px;
+  }
+  &.success { color: rgba(52, 112, 141, 1.00); background-color: rgba(218, 237, 247, 1.00); border-color: rgba(190, 232, 240, 1.00); &:before { content: '\f0004'; } }
+  &.info { color: rgba(62, 117, 63, 1.00); background-color: rgba(224, 240, 217, 1.00); border-color: rgba(215, 233, 199, 1.00); &:before { content: '\f0006'; } }
+  &.danger, &.failure { color: rgba(167, 69, 68, 1.00); background-color: rgba(242, 222, 222, 1.00); border-color: rgba(234, 204, 209, 1.00); &:before { content: '\f0005'; } }
+  &.danger:before { content: '\f0007'; }
+  &:empty { display: none; }
+}
+#main-container {
+  padding: 16px;  
+  margin-top: 16px;
+  padding-top: 0;
+}
+#menu {
+  @extend .scrolling;
+
+  position: fixed;
+  left: 0;
+  top: 0;
+
+  display: inline-block;
+  height: calc(100% - #{$footerHeight});
+  width: $menuWidth;
+  
+  background-color: rgba(42, 63, 84, 1.00);
+  z-index: 300;
+
+  > * {
+    display: inline-block;
+    width: 100%;
+  }
+}
+#menu-header {
+  position: relative;
+  height: $topHeight;
+  line-height: $topHeight;
+  color: rgba(236, 240, 241, 1.00);
+
+  * {
+    position: absolute;
+    top: ($topHeight - 32px) / 2;
+    display: inline-block;
+    height: 32px;
+  }
+
+  a {
+    @extend .icon-before;
+
+    left: ($topHeight - 32px) / 2;
+
+    width: 32px;
+    line-height: 32px - 2px;
+
+    border: 1px solid rgba(236, 240, 241, 1.00);
+    text-align: center;
+    font-weight: bolder;
+    font-size: 20px;
+    color: rgba(236, 240, 241, 1.00);
+
+    text-decoration: none;
+
+    @include border-radius(50%);
+    
+    &:before {
+      content: '\f0008';
+    }
+  }
+
+  span {
+    left: ($topHeight - 32px) / 2 + 32px + 8px;
+
+    max-width: calc(100% - #{($topHeight - 32px) / 2 + 32px + 8px});
+    line-height: 32px;
+
+    @include overflow-docx3();
+    @include opacity(1);
+    @include transition(opacity .3s, width .3s);
+  }
+}
+#menu-user {
+  $size: 52px;
+  position: relative;
+  height: $size;
+
+  margin: 20px 0;
+  margin-top: 10px;
+
+  padding: 0;
+
+  text-align: left;
+  color: rgba(236, 240, 241, 1.00);
+  overflow: hidden;
+
+  @include opacity(1);
+  @include transition(opacity .3s);
+  
+  * {
+    position: absolute;
+    display: inline-block;
+  }
+
+  figure {
+    @extend .background-cover;
+
+    top: 0;
+    left: 8px;
+
+    width: $size;
+    height: $size;
+    
+    margin: 0;
+    border: 3px solid rgba(255, 255, 255, 1.00);
+    overflow: hidden;
+    @include border-radius(50%);
+    @include box-shadow(inset 0 0 2px rgba(39, 40, 34, 1.00), 0 0 2px rgba(39, 40, 34, 1.00));
+  }
+
+  div {
+    top: 0;
+    left: 8px + $size + 16px;
+
+    display: inline-block;
+    width: calc(100% - #{8px + $size + 16px + 4px});
+    height: $size;
+
+    font-size: 14px;
+    line-height: 16px;
+
+    @include word-break(break-all);
+    @include text-shadow(0 0 1px rgba(39, 40, 34, 1.00));
+
+    &:before {
+      content: attr(data-title);
+      display: inline-block;
+      width: 100%;
+      height: 20px;
+      line-height: 20px;
+
+      font-size: 12px;
+
+      color: rgba(186, 184, 184, 1.00);
+      @include overflow-docx3();
+    }
+  }
+}
+#menu-main {
+  text-align: left;
+}
+#menu-container {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+
+  &:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+
+    display: inline-block;
+    width: 100%;
+    height: 1px;
+
+    font-size: 14px;
+    border-top: 1px solid rgba(31, 45, 58, 1.00);
+    border-bottom: 1px solid rgba(63, 81, 99, 1.00);
+  }
+
+  span, a {
+    padding-left: 44px;
+    @include overflow-docx3();
+
+    &:before {
+      position: absolute;
+      left: 0;
+      top: 0;
+
+      display: inline-block;
+      width: 44px;
+      height: 44px;
+      
+      font-size: 16px;
+      text-align: center;
+    }
+
+    &[data-cnt]:not([data-cnt="0"]) {
+
+      &:after {
+        content: '10+';
+      }
+      @for $i from 1 through 10 {
+        &[data-cnt="#{$i}"] {
+          &:after {
+            content: '#{$i}';
+          }
+        }
+      }
+      &:after {
+        position: absolute;
+        right: 4px;
+        top: 12px;
+
+        display: inline-block;
+        min-width: 24px;
+        height: 24px;
+        line-height: 24px;
+        
+        padding: 0 8px;
+
+        color: rgba(255, 255, 255, 1.00);
+        font-size: 13px;
+        text-align: center;
+        background-color: rgba(236, 83, 70, 1.00);
+        z-index: 99;
+
+        @include scale(.8);
+        @include border-radius(24px / 2);
+        @include box-shadow(inset 1px 1px 1px rgba(0, 0, 0, .4));
+      }
+    }
+
+    &.cnt-info[data-cnt]:not([data-cnt="0"]):after {
+      background-color: rgba(123, 171, 244, 1.00);
+    }
+  }
+
+  span {
+    position: relative;
+    
+    display: block;
+    height: 44px;
+    line-height: 44px;
+
+    cursor: pointer;
+    color: rgba(200, 205, 210, 1.00);
+
+    &:hover {
+      color: rgba(255, 255, 255, 1.00);
+    }
+
+    &.active {
+      font-weight: bold;
+      color: rgba(48, 226, 187, 1.00);
+
+      &:after {
+        font-weight: normal;
+      }
+      &:not([data-cnt]), &[data-cnt="0"] {
+        &:after {
+          color: rgba(255, 255, 255, 1);
+          @include rotate(180deg + 360deg);
+        }
+      }
+
+      + div {
+        @for $i from 1 through $maxSubMenu {
+          &.n#{$i} {
+            height: 40px * $i;
+          }
+        }
+      }
+    }
+
+    &:not([data-cnt]), &[data-cnt="0"] {
+      @extend .icon-after;
+
+      &:after {
+        content: '\f0009';
+
+        position: absolute;
+        right: 0;
+        top: 0;
+
+        display: inline-block;
+        width: 30px;
+        height: 100%;
+
+        text-align: center;
+        color: rgba(255, 255, 255, .4);
+        @include rotate(0);
+      }
+    }
+  }
+
+  div {
+    position: relative;
+    display: block;
+    height: 1px;
+
+    overflow: hidden;
+    background-color: rgba(41, 55, 70, 1.00);
+
+    &:before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+
+      display: inline-block;
+      width: 100%;
+      height: 1px;
+      
+      border-top: 1px solid rgba(63, 81, 99, 1.00);
+      border-bottom: 1px solid rgba(31, 45, 58, 1.00);
+    }
+  }
+  a {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+    
+    color: rgba(189, 195, 201, 1.00);
+    font-size: 14px;
+    text-decoration: none;
+    
+    &:hover {
+      color: rgba(250, 250, 250, 1.00);
+    }
+
+    &:before {
+    }
+
+    &.active {
+      color: rgba(38, 185, 154, 1.00);
+    }
+
+    &[data-cnt]:not([data-cnt="0"]):after {
+      right: 4px;
+      @include scale(.7);
+    }
+  }
+
+  &:last-child {
+    span:not(.active) {
+      border-bottom: 1px solid rgba(34, 47, 60, 1.00);
+    }
+    div {
+      border-bottom: 1px solid rgba(62, 76, 90, 1.00);
+    }
+  }
+}
+#footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+
+  display: inline-block;
+  width: $menuWidth;
+  height: $footerHeight;
+  line-height: $footerHeight;
+
+  color: rgba(255, 255, 255, .40);
+  font-size: 13px;
+  text-align: center;
+
+  border-top: 1px solid rgba(255, 255, 255, .10);
+  z-index: 400;
+  background-color: rgba(54, 81, 109, 1.00);
+
+  a {
+    font-size: 11px;
+    @include a(1px, true, rgba(255, 255, 255, .75), rgba(255, 255, 255, 1.00));
+  }
+}
+
+#loading {
+  @extend .popbox;
+
+  $width: 128px;
+  $size: 24px;
+  $border: 4px;
+  $height: 52px;
+  $space: ($height - $size) / 2;
+
+  width: $width;
+  height: $height;
+  line-height: $height;
+  font-size: 14px;
+  padding-left: $space + $size;
+  padding-right: $space + $space / 2;
+  text-align: center;
+  z-index: -1;
+
+  @include scale(0);
+  @include overflow-docx3();
+  @include border-radius(12px);
+  @include box-shadow(0 7px 8px -4px rgba(0,0,0,0.2), 0 13px 19px 2px rgba(0,0,0,0.14), 0 5px 24px 4px rgba(0,0,0,0.12));
+
+  &.show {
+    top: calc(50% - #{$height / 2});
+    left: calc(50% - #{$width / 2});
+    z-index: 999;
+    @include opacity(1);
+    @include transition(transform .3s cubic-bezier(.68, -0.275, .825, 0.115));
+    
+    + .popbox-cover {
+      z-index: 999 - 5;
+      left: 0;
+      @include opacity(1);
+    }
+    
+    &.ani {
+      @include transition(transform .3s cubic-bezier(.175, .885, .32, 1.275));
+      @include scale(1);
+    }
+  }
+  &:before, &:after {
+    content: '';
+    position: absolute;
+    display: inline-block;
+    background-color: white;
+    @include border-radius(50%);
+  }
+
+  &:before {
+    left: $space;
+    top: calc(50% - #{$size / 2});
+    width: $size;
+    height: $size;
+
+    @include background-image(linear-gradient(
+      rgba(59, 243, 156, 1.00) 0%,
+      rgba(51, 224, 175, 1.00) 33%,
+      rgba(42, 202, 200, 1.00) 67%,
+      rgba(34, 181, 228, 1.00) 100%));
+
+    @include animation(rotate 1s linear infinite);
+    @include box-shadow(inset 0 0 2px rgba(0, 0, 0, .3));
+  }
+  &:after {
+    left: $space + $border;
+    top: calc(50% - #{($size - $border * 2) / 2});
+    width: $size - $border * 2;
+    height: $size - $border * 2;
+    @include box-shadow(0 0 3px rgba(0, 0, 0, .3));
+  }
+}
+
+#notify {
+  position: fixed;
+  bottom: 12px;
+  right: 12px;
+  display: inline-block;
+  width: 320px;
+  z-index: 700;
+
+  $h: 85px;
+
+  div {
+    position: absolute;
+    bottom: -$h;
+    right: -100%;
+
+    display: inline-block;
+    width: 100%;
+    height: $h;
+    padding: 0;
+    background-color: rgba(255, 255, 255, 1.00);
+    overflow: hidden;
+    
+    @include border-radius(1px);
+    @include opacity(0);
+    @include box-shadow(0 1px 8px -4px rgba(0,0,0,0.2), 0 0 1px rgba(0,0,0,0.3), 0 2px 4px rgba(0, 0, 0, .15));
+    @include transition(bottom .3s, right .3s, opacity .3s);
+    @include clearfix();
+
+    &.pointer {
+      cursor: pointer;
+    }
+
+    &.show {
+      right: 0;
+      @include opacity(1);
+    }
+    &:hover {
+      > span + span {
+        color: rgba(105, 105, 105, 1);
+      }
+      > div + span, > span:first-child {
+        color: rgba(85, 85, 85, 1);
+      }
+      > div {
+        background-color: rgba(240, 240, 240, 1.00);
+        
+        &.font-icon {
+          &:before {
+            color: rgba(135, 135, 135, 1.00);
+          }
+        }
+      }
+    }
+
+    a {
+      @extend .icon-before;
+
+      position: absolute;
+      right: 0;
+      top: 0;
+      display: inline-block;
+      width: 25px;
+      height: 25px;
+      line-height: 25px;
+      color: rgba(175, 175, 175, 1.00);
+      font-weight: bold;
+      cursor: pointer;
+      @include transition(color .3s);
+
+      &:hover {
+        color: rgba(105, 105, 105, 1.00);
+      }
+      &:before {
+        content: '\f0005';
+      }
+    }
+    b, span {
+      display: inline-block;
+      width: 100%;
+      float: right;
+      text-align: left;
+      padding: 0 12px;
+      @include transition(color .3s);
+    }
+    b {
+      margin-top: 8px + 4px;
+      padding-right: 20px;
+      font-size: 14px;
+      @include overflow-docx3();
+      + span {
+        margin-top: 4px;
+        height: 16px * 2;
+        -webkit-line-clamp: 2;
+      }
+    }
+    span {
+      display: -webkit-box;
+      margin-top: 18px;
+      height: 16px * 3;
+      line-height: 16px;
+      font-size: 10px;
+
+      word-break: break-all;
+      overflow: hidden;
+      color: rgba(135, 135, 135, 1);
+
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      @include word-break(break-all);
+    }
+
+    figure {
+      @extend .background-cover;
+      @extend .icon-before;
+
+      float: left;
+      display: inline-block;
+      height: $h;
+      width: $h;
+      margin: 0;
+      overflow: hidden;
+      background-color: rgba(245, 245, 245, 1.00);
+      border-right: 1px solid rgba(240, 240, 240, 1.00);
+      @include transition(background-color .3s);
+      
+      &:before {
+        line-height: $h;
+        font-size: $h / 2;
+        @include text-shadow(1px 1px rgba(255, 255, 255, 1));
+        @include transition(color .3s);
+        @include text-shadow(1px 1px white);
+      }
+      ~ b, ~ span {
+        width: calc(100% - #{$h});
+      }
+      &.error:before { content: '\f0007'; color: rgba(197, 56, 40, 1.00); }
+      &.bug:before { content: '\f000a'; color: rgba(117, 117, 117, 1.00); }
+      &.info:before { content: '\f0006'; color: rgba(13, 172, 241, 1.00); }
+      &.failure:before { content: '\f0005'; color: rgba(197, 56, 40, 1.00); }
+      &.success:before { content: '\f0004'; color: rgba(24, 181, 141, 1.00); }
+    }
+  }
+
+  @include range-width(450px) {
+    > div {
+      @for $i from 1 through 20 {
+        &:nth-child(#{$i}) {
+          bottom: ($h + 12px) * ($i - 1);
+          z-index: 20 - $i;
+        }
+      }
+    }
+  }
+  @include range-width(0, 450px) {
+    top: 0;
+    left: 0;
+    right: auto;
+    bottom: auto;
+
+    width: 100%;
+    background-color: rgba(0, 0, 255, 0.2);
+
+    > div {
+      right: auto;
+      bottom: auto;
+      top: -$h;
+      left: 8px;
+      width: calc(100% - 8px * 2);
+      @include opacity(1);
+      @include border-radius(3px);
+      @include box-shadow(0 7px 8px -4px rgba(0,0,0,0.2), 0 13px 19px 2px rgba(0,0,0,0.14), 0 5px 24px 4px rgba(0,0,0,0.12));
+      @include transition(top .3s);
+      
+      &.show {
+        top: 8px;
+        @for $i from 1 through 20 {
+          &:nth-last-child(#{$i}) {
+            top: 8px + ($i - 1) * 4px;
+          }
+        }
+      }
+      &:nth-last-child(n + 4) {
+        display: none;
+      }
+    }
+  };
+}
+
+#ajax-error {
+  @extend .popbox;
+  @extend .icon-before;
+  width: 640px;
+  height: 480px;
+
+  z-index: -1;
+
+  overflow: hidden;
+  @include scale(0);
+  @include border-radius(3px);
+  @include box-shadow(0 7px 8px -4px rgba(0,0,0,0.2), 0 13px 19px 2px rgba(0,0,0,0.14), 0 5px 24px 4px rgba(0,0,0,0.12));
+
+  &.show {
+    top: calc(50% - 480px / 2);
+    left: calc(50% - 640px / 2);
+    z-index: 999;
+    @include opacity(1);
+    @include transition(transform .3s cubic-bezier(.68, -0.275, .825, 0.115));
+    
+    + .popbox-cover {
+      z-index: 999 - 5;
+      left: 0;
+      @include opacity(1);
+    }
+    &.ani {
+      @include transition(transform .3s cubic-bezier(.175, .885, .32, 1.15));
+      @include scale(1);
+    }
+  }
+
+  b, label {
+    position: absolute;
+    left: 0;
+    display: inline-block;
+    width: 100%;
+    height: 48px;
+    line-height: 48px;
+    z-index: 3;
+  }
+  b {
+    top: 0;
+    background-color: rgba(250, 250, 250, 1);
+    border-bottom: 1px solid rgba(228, 228, 228, 1.00);
+  }
+  label {
+    bottom: 0;
+    border-top: 1px solid rgba(222, 222, 222, 1.00);
+    background-color: white;
+    @include transition(background-color .3s);
+    
+    &:hover {
+      background-color: rgba(250, 250, 250, 1);
+    }
+    &.ing {
+      cursor: not-allowed;
+      color: rgba(200, 200, 200, 1);
+      background-color: rgba(250, 250, 250, 1);
+    }
+  }
+  div {
+    @extend .scrolling-white;
+    display: inline-block;
+    width: 100%;
+    height: calc(100% - #{48px * 2});
+    line-height: 16px;
+
+    padding: 12px 16px;
+    margin: 48px 0;
+    
+    color: rgba(100, 100, 100, 1);
+    font-weight: 350;
+    font-size: 13px;
+    text-align: left;
+    z-index: 1;
+
+    @include word-break(break-all);
+    @include transition(height .3s);
+  }
+
+  @include range-width(0, 675px) {
+    width: calc(100% - #{12px * 2});
+    &.show {
+      left: 12px;
+    }
+  };
+  @include range-height(0, 520px) {
+    height: calc(100% - #{12px * 2});
+    &.show {
+      top: 12px;
+    }
+  };
+}
+
+@include keyframes(rotate){
+  100% {
+    @include rotate(360deg);
+  }
+}
