@@ -63,7 +63,7 @@ abstract class AdminController extends Controller {
                       ->withReference('parent', $this->parent);
   }
 
-  protected function methedIn() {
+  protected function methodIn() {
     $args = func_get_args();
     $methods = array_filter($args, 'is_string');
 

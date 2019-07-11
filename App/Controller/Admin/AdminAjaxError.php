@@ -12,7 +12,7 @@ class AdminAjaxError extends AdminController {
 
     ifErrorTo('AdminAdminAjaxErrorIndex');
 
-    $this->methedIn('show', 'read', function() {
+    $this->methodIn('show', 'read', function() {
       return $this->obj = \M\AdminAjaxError::one('id = ?', Router::param('id'));
     });
 
