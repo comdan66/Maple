@@ -25,7 +25,7 @@ echo $show->panel(function($obj) {
   Json::create('FILE 資料')
       ->val($obj->file);
 
-  Json::create('FLEASH 資料')
+  Json::create('FLASH 資料')
       ->val($obj->flash);
 
   Text::create('新增時間')
