@@ -12,7 +12,7 @@ class AdminLog extends AdminController {
 
     ifErrorTo('AdminAdminIndex');
 
-    $this->methedIn(function() {
+    $this->methodIn(function() {
       return $this->parent = \M\Admin::one('id = ?', Router::param('adminId'));
     });
 
@@ -20,7 +20,7 @@ class AdminLog extends AdminController {
 
     ifErrorTo('AdminAdminShow', $this->parent);
 
-    $this->methedIn('show', function() {
+    $this->methodIn('show', function() {
       return $this->obj = \M\AdminLog::one('id = ?', Router::param('id'));
     });
 

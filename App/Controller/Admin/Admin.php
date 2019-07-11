@@ -15,7 +15,7 @@ class Admin extends AdminController {
 
     $this->ignoreIds = [1];
 
-    $this->methedIn('edit', 'update', 'delete', 'show', function() {
+    $this->methodIn('edit', 'update', 'delete', 'show', function() {
       return $this->obj = \M\Admin::one('id = ? AND id NOT IN (?)', Router::param('id'), $this->ignoreIds);
     });
 

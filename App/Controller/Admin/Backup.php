@@ -12,7 +12,7 @@ class Backup extends AdminController {
 
     ifErrorTo('AdminBackupIndex');
 
-    $this->methedIn('show', 'read', function() {
+    $this->methodIn('show', 'read', function() {
       return $this->obj = \M\Backup::one('id = ?', Router::param('id'));
     });
 

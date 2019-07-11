@@ -12,7 +12,7 @@ class Crontab extends AdminController {
 
     ifErrorTo('AdminCrontabIndex');
 
-    $this->methedIn('show', 'read', function() {
+    $this->methodIn('show', 'read', function() {
       return $this->obj = \M\Crontab::one('id = ?', Router::param('id'));
     });
 
