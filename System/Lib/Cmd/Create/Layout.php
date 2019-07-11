@@ -319,8 +319,7 @@ class Layout {
         $texts,
         $textareas,
         $enable,
-        $sort,
-      );
+        $sort);
   }
   
   public static function createNestedCRUD() {
