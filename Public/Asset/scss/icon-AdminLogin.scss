@@ -1,0 +1,28 @@
+//
+// @author      OA Wu <comdan66@gmail.com>
+// @copyright   Copyright (c) 2015 - 2019, Ginkgo
+// @license     http://opensource.org/licenses/MIT  MIT License
+// @link        https://www.ioa.tw/
+//
+
+@import "compass/css3/font-face";
+
+@include font-face("icon-AdminLogin", font-files(
+  "AdminLogin/fonts/icomoon.eot",
+  "AdminLogin/fonts/icomoon.woff",
+  "AdminLogin/fonts/icomoon.ttf",
+  "AdminLogin/fonts/icomoon.svg"));
+
+*[class^="icon-AdminLogin-"]:before, *[class*=" icon-AdminLogin-"]:before {
+  font-family: "icon-AdminLogin";
+
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+}
+
+.icon-AdminLogin-001:before { content: "\f0001"; }
+.icon-AdminLogin-003:before { content: "\f0003"; }
+.icon-AdminLogin-002:before { content: "\f0002"; }
+.icon-AdminLogin-004:before { content: "\f0004"; }

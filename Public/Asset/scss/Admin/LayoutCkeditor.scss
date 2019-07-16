@@ -1,0 +1,97 @@
+//
+// @author      OA Wu <comdan66@gmail.com>
+// @copyright   Copyright (c) 2015 - 2019, Ginkgo
+// @license     http://opensource.org/licenses/MIT  MIT License
+// @link        https://www.ioa.tw/
+//
+
+@import "Ginkgo";
+@import "_def";
+
+#main {
+  @extend .-dib;
+  @extend .-w100;
+  @extend .-h100;
+  padding: 20px;
+  max-width: 1200px;
+  @include range-width(0, 400px) { padding: 10px; }
+}
+
+#imageBrowse {
+  @extend .-dib;
+  @extend .-w100;
+  @extend .-fl-x;
+  @extend .-b-dib;
+  @extend .-b-w100;
+  margin: 0 auto;
+  margin-top: 20px;
+  @include range-width(0, 700px) { margin-top: 16px; }
+  
+  &:before {
+    height: 44px;
+    line-height: 44px;
+    color: rgba(180, 180, 180, 1);
+    font-style: italic;
+    @include text-shadow(1px 1px 1px white);
+  }
+
+  &:empty:before {
+    content: '沒有資料';
+  }
+
+  * {
+    @extend .-fl-l;
+    @extend .-pr;
+    @extend .-dib;
+    @extend .-m0;
+    @extend .-cu-p;
+    @extend .-bg-w;
+    @extend .-br3;
+    @extend .-a-pa;
+    @extend .-a-l0;
+    @extend .-a-b0;
+    @extend .-a-dib;
+    @extend .-a-w100;
+    @extend .-a-co-w;
+    @extend .-a-doc3;
+    @extend .-a-op0;
+
+    width: 200px;
+    height: 200px;
+    border: 1px solid rgba(40, 40, 40, .2);
+    border-top: 1px solid rgba(80, 80, 80, .2);
+    border-left: 1px solid rgba(80, 80, 80, .2);
+    @include transition(border-color .3s);
+
+    @include range-width(0,     400px) { height: 100px; }
+    @include range-width(400px, 450px) { height: 135px; }
+    @include range-width(450px, 700px) { height: 150px; }
+    @include range-width(0,     400px) {   $i: 2; width: calc((100% - 8px  * #{$i - 1}) / #{$i}); margin-right: 8px;  &:nth-child(n + #{$i + 1}) { margin-top: 8px; }  &:nth-child(#{$i}n) { margin-right: 0; } }
+    @include range-width(400px, 450px) {   $i: 2; width: calc((100% - 12px * #{$i - 1}) / #{$i}); margin-right: 12px; &:nth-child(n + #{$i + 1}) { margin-top: 12px; } &:nth-child(#{$i}n) { margin-right: 0; } }
+    @include range-width(450px, 500px) {   $i: 2; width: calc((100% - 12px * #{$i - 1}) / #{$i}); margin-right: 12px; &:nth-child(n + #{$i + 1}) { margin-top: 12px; } &:nth-child(#{$i}n) { margin-right: 0; } }
+    @include range-width(500px, 600px) {   $i: 2; width: calc((100% - 16px * #{$i - 1}) / #{$i}); margin-right: 16px; &:nth-child(n + #{$i + 1}) { margin-top: 16px; } &:nth-child(#{$i}n) { margin-right: 0; } }
+    @include range-width(600px, 700px) {   $i: 3; width: calc((100% - 16px * #{$i - 1}) / #{$i}); margin-right: 16px; &:nth-child(n + #{$i + 1}) { margin-top: 16px; } &:nth-child(#{$i}n) { margin-right: 0; } }
+    @include range-width(700px, 900px) {   $i: 3; width: calc((100% - 20px * #{$i - 1}) / #{$i}); margin-right: 20px; &:nth-child(n + #{$i + 1}) { margin-top: 20px; } &:nth-child(#{$i}n) { margin-right: 0; } }
+    @include range-width(900px, 1200px) {  $i: 4; width: calc((100% - 20px * #{$i - 1}) / #{$i}); margin-right: 20px; &:nth-child(n + #{$i + 1}) { margin-top: 20px; } &:nth-child(#{$i}n) { margin-right: 0; } }
+    @include range-width(1200px) {         $i: 5; width: calc((100% - 20px * #{$i - 1}) / #{$i}); margin-right: 20px; &:nth-child(n + #{$i + 1}) { margin-top: 20px; } &:nth-child(#{$i}n) { margin-right: 0; } }
+    
+    &:after {
+      height: 28px;
+      line-height: 28px;
+      background-color: rgba(0, 0, 0, .3);
+      @include transition(opacity .3s);
+    }
+    &[data-datetime]:not([data-datetime='']):after {
+      content: attr(data-datetime);
+    }
+    &:hover {
+      border-color: rgba(40, 40, 40, .3);
+      border-top-color: rgba(80, 80, 80, .3);
+      border-left-color: rgba(80, 80, 80, .3);
+      @extend .-a-op1;
+      &:after {
+        @include opacity(1);
+      }
+    }
+  }
+}

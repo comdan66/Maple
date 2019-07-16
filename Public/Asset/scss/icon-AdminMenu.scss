@@ -1,0 +1,33 @@
+//
+// @author      OA Wu <comdan66@gmail.com>
+// @copyright   Copyright (c) 2015 - 2019, Ginkgo
+// @license     http://opensource.org/licenses/MIT  MIT License
+// @link        https://www.ioa.tw/
+//
+
+@import "compass/css3/font-face";
+
+@include font-face("icon-AdminMenu", font-files(
+  "AdminMenu/fonts/icomoon.eot",
+  "AdminMenu/fonts/icomoon.woff",
+  "AdminMenu/fonts/icomoon.ttf",
+  "AdminMenu/fonts/icomoon.svg"));
+
+*[class^="icon-AdminMenu-"]:before, *[class*=" icon-AdminMenu-"]:before {
+  font-family: "icon-AdminMenu";
+
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+}
+
+.icon-AdminMenu-003:before { content: "\f003"; }
+.icon-AdminMenu-008:before { content: "\f008"; }
+.icon-AdminMenu-001:before { content: "\f001"; }
+.icon-AdminMenu-004:before { content: "\f004"; }
+.icon-AdminMenu-005:before { content: "\f005"; }
+.icon-AdminMenu-009:before { content: "\f009"; }
+.icon-AdminMenu-007:before { content: "\f007"; }
+.icon-AdminMenu-002:before { content: "\f002"; }
+.icon-AdminMenu-006:before { content: "\f006"; }
