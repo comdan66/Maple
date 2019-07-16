@@ -1,0 +1,10 @@
+@font-face { font-family: "icon-AdminLogin"; src: url('../font/AdminLogin/fonts/icomoon.eot?1562839715') format('embedded-opentype'), url('../font/AdminLogin/fonts/icomoon.woff?1562839715') format('woff'), url('../font/AdminLogin/fonts/icomoon.ttf?1562839715') format('truetype'), url('../font/AdminLogin/fonts/icomoon.svg?1562839715') format('svg'); }
+*[class^="icon-AdminLogin-"]:before, *[class*=" icon-AdminLogin-"]:before { font-family: "icon-AdminLogin"; speak: none; font-style: normal; font-weight: normal; font-variant: normal; }
+
+.icon-AdminLogin-001:before { content: "\f0001"; }
+
+.icon-AdminLogin-003:before { content: "\f0003"; }
+
+.icon-AdminLogin-002:before { content: "\f0002"; }
+
+.icon-AdminLogin-004:before { content: "\f0004"; }

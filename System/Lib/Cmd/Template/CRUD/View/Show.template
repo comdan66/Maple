@@ -1,0 +1,41 @@
+
+use \CRUD\Show\Id       as Id;
+use \CRUD\Show\Text     as Text;
+<?php if ($images) { ?>
+use \CRUD\Show\Image    as Image;
+<?php } ?>
+use \CRUD\Show\Datetime as Datetime;
+<?php if ($textareas) { ?>
+use \CRUD\Show\Textarea as Textarea;
+<?php } ?>
+
+echo $show->back();
+
+echo $show->panel(function($obj) {
+
+  Id::create();
+<?php if ($images) {
+        foreach ($images as $image) { ?>
+
+  Image::create('<?php echo $image['text'];?>')
+       ->val($obj-><?php echo $image['name'];?>);
+<?php   }
+      }
+      if ($texts) {
+        foreach ($texts as $text) { ?>
+
+  Text::create('<?php echo $text['text'];?>')
+      ->val($obj-><?php echo $text['name'];?>);
+<?php   }
+      }
+      if ($textareas) {
+        foreach ($textareas as $textarea) { ?>
+
+  Textarea::create('<?php echo $textarea['text'];?>')
+          ->val($obj-><?php echo $textarea['name'];?>);
+<?php   }
+      } ?>
+
+  Datetime::create('新增時間')
+          ->val($obj->createAt);
+});

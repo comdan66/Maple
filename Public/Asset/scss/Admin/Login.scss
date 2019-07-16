@@ -1,0 +1,197 @@
+//
+// @author      OA Wu <comdan66@gmail.com>
+// @copyright   Copyright (c) 2015 - 2019, Ginkgo
+// @license     http://opensource.org/licenses/MIT  MIT License
+// @link        https://www.ioa.tw/
+//
+
+@import "Ginkgo";
+@import "_def";
+
+body {
+  background-color: rgba(244, 245, 247, 1.00);
+}
+
+#main {
+  @extend .-dib;
+  @extend .-w100;
+  margin-top: 32px;
+}
+
+footer {
+  @extend .-dib;
+  @extend .-w100;
+  @extend .-ff0;
+  @extend .-fs10;
+
+  height: 22px;
+  line-height: 22px;
+  margin-top: 8px;
+  font-weight: 300;
+
+  a {
+    @extend .-link;
+    @extend .-td-n;
+  }
+}
+h1 {
+  @extend .-dib;
+  @extend .-w100;
+  @extend .-ff0;
+  @extend .-ta-c;
+  
+  font-weight: 150;
+  margin-top: 0;
+  height: 45px;
+  line-height: 45px;
+}
+
+span {
+  @extend .-pr;
+  @extend .-dib;
+  @extend .-w100;
+  @extend .-fs14;
+  @extend .-ta-l;
+  @extend .-br2;
+  @extend .-b-pa;
+  @extend .-b-l0;
+  @extend .-b-dib;
+  @extend .-b-ta-c;
+  width: 100%;
+  padding: 4px;
+  padding-left: 32px;
+  line-height: 26px;
+  margin-bottom: 8px;
+  
+  &:empty {
+    @extend .-dn;
+  }
+
+  &.failure {
+    @extend .-b-ffi-login;
+    color: rgba(167, 69, 68, 1.00);
+    background-color: rgba(242, 222, 222, 1.00);
+    border: 1px solid rgba(234, 204, 209, 1.00);
+
+    &:before {
+      content: "\f0004";
+    }
+  }
+  &.success {
+    @extend .-b-ffi-login;
+    color: rgba(52, 112, 141, 1.00);
+    background-color: rgba(218, 237, 247, 1.00);
+    border: 1px solid rgba(190, 232, 240, 1.00);
+    
+    &:before {
+      content: "\f0003";
+    }
+  }
+  &:before {
+    top: 4px;
+    width: 32px;
+  }
+}
+
+button {
+  @extend .-dib;
+  @extend .-w100;
+  @extend .-fs16;
+  @extend .-br3;
+  @extend .-co-w;
+  @extend .-cu-p;
+
+  border: 0;
+  border-top: 2px solid transparent;
+  border-bottom: 2px solid transparent;
+  height: 36px;
+  line-height: 36px - 2px - 2px;
+  margin-top: 28px;
+
+  $color: rgba(79, 182, 187, 1.00);
+  background-color: $color;
+  border-bottom-color: adjust-lightness($color, -10%);
+  @include transition(background-color .3s, border-top-color .3s, border-bottom-color .3s);
+  
+  &:hover {
+    background-color: adjust-lightness($color, -5%);
+    border-bottom-color: adjust-lightness($color, -15%);
+  }
+  &:active {
+    background-color: adjust-lightness($color, -10%);
+    border-top-color: adjust-lightness($color, -20%);
+    border-bottom-color: transparent;
+  }
+  &:focus {
+    outline: none;
+    // @include box-shadow(0 0 1px 3px rgba(38, 143, 255, .3));
+  }
+}
+
+
+label {
+  @extend .-pr;
+  @extend .-dib;
+  @extend .-w100;
+  @extend .-ta-l;
+  @extend .-b-ffi-login;
+  @extend .-b-pa;
+  @extend .-a-pa;
+  @extend .-b-l0;
+  @extend .-a-l0;
+  @extend .-b-dib;
+  @extend .-a-dib;
+  @extend .-a-t0;
+  @extend .-a-w100;
+  @extend .-a-fs14;
+  @extend .-b-ta-c;
+  padding-top: 28px;
+
+  &:after {
+    content: attr(data-title);
+    height: 28px;
+    line-height: 28px;
+    @include opacity(.75);
+  }
+
+  &:before {
+    top: 5px + 28px;
+    width: 36px;
+    height: 36px - 5px * 2;
+    line-height: 36px - 5px * 2;
+
+    color: rgba(130, 130, 130, 1);
+    border-right: 1px solid rgba(230, 230, 230, 1);
+  }
+
+  &.account:before { content: '\f0001'; }
+  &.password:before { content: '\f0002'; }
+
+  + label {
+    margin-top: 12px;
+  }
+}
+
+input {
+  @extend .-w100;
+  height: 36px;
+  line-height: 36px;
+  padding-left: 36px + 6px;
+  border: 1px solid rgba(200, 200, 200, 1.00);
+}
+
+#login {
+  @extend .-dib;
+  @extend .-oh;
+
+  width: 320px;
+  border-top: 1px solid $borderColor1;
+  border-left: 1px solid $borderColor1;
+  border-right: 1px solid $borderColor2;
+  border-bottom: 1px solid $borderColor3;
+
+  background-color: rgba(255, 255, 255, 1.00);
+  padding: 16px 20px;
+  padding-bottom: 32px;
+  @include border-radius(3px);
+}
