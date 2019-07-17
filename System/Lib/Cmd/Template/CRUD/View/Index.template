@@ -21,7 +21,8 @@ echo $table->back();
 
 echo $table->search(function() {
 
-  Input::create();
+  Input::create('ID')
+       ->sql('id = ?');
 <?php if ($enable) { ?>
 
   Checkbox::create('啟用')

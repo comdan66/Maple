@@ -65,7 +65,7 @@ echo $table->list(function($obj) use ($show) {
                ->val($obj->createAt);
 
   TableCtrl::create()
-      ->setShowRouter('AdminAdminLogShow', $show->obj(), $obj);
+           ->setShowRouter('AdminAdminLogShow', $show->obj(), $obj);
 });
 
 echo $table->pages();
