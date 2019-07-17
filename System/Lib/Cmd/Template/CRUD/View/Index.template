@@ -1,0 +1,93 @@
+
+use \CRUD\Table\Search\Input    as Input;
+<?php if ($enable) { ?>
+use \CRUD\Table\Search\Checkbox as Checkbox;
+<?php } ?>
+
+use \CRUD\Table\Id       as Id;
+use \CRUD\Table\Ctrl     as Ctrl;
+use \CRUD\Table\Text     as Text;
+<?php if ($images) { ?>
+use \CRUD\Table\Image    as Image;
+<?php }
+      if ($enable) { ?>
+use \CRUD\Table\Switcher as Switcher;
+<?php } ?>
+use \CRUD\Table\Datetime as Datetime;
+
+<?php if ($hasParent) { ?>
+echo $table->back();
+<?php } ?>
+
+echo $table->search(function() {
+
+  Input::create('ID')
+       ->sql('id = ?');
+<?php if ($enable) { ?>
+
+  Checkbox::create('啟用')
+          ->items(<?php echo $modelName;?>::ENABLE)
+          ->sql('enable IN (?)');
+<?php }
+      if ($texts) {
+        foreach ($texts as $text) {
+          $type = $text['type'] ?? '';
+          $type = $type != 'date'
+            ? $type == 'number'
+              ? "->type('number')\n       "
+              : ""
+            : "->type('date')\n       ";
+          ?>
+
+  Input::create('<?php echo $text['text'];?>')
+       <?php echo $type;?>->sql('<?php echo $text['name'];?> LIKE ?');
+<?php   }
+      }
+      if ($textareas) {
+        foreach ($textareas as $textarea) { ?>
+
+  Input::create('<?php echo $textarea['text'];?>')
+       ->sql('<?php echo $textarea['name'];?> LIKE ?');
+<?php   }
+      } ?>
+});
+
+echo $table->list(function($obj) {
+<?php if ($enable) { ?>
+
+  Switcher::create('啟用')
+          ->on(<?php echo $modelName;?>::ENABLE_YES)
+          ->off(<?php echo $modelName;?>::ENABLE_NO)
+          ->router('Admin<?php echo $controllerName;?>Enable', $obj)
+          ->column('enable');
+<?php } ?>
+
+  Id::create();
+<?php if ($images) { ?>
+
+  Image::create('<?php echo $images[0]['text'];?>')
+       ->val($obj-><?php echo $images[0]['name'];?>);
+<?php }
+      if ($texts) { ?>
+
+  Text::create('<?php echo $texts[0]['text'];?>')
+      ->width(150)
+      ->val($obj-><?php echo $texts[0]['name'];?>);
+<?php }
+      if ($textareas) { ?>
+
+  Text::create('<?php echo $textareas[0]['text'];?>')
+      ->val(minText($obj-><?php echo $textareas[0]['name'];?>));
+<?php } ?>
+
+  Datetime::create('新增時間')
+          ->align('right')
+          ->val($obj->createAt);
+
+  Ctrl::create()
+      ->setShowRouter('Admin<?php echo $controllerName;?>Show', $obj)
+      ->setEditRouter('Admin<?php echo $controllerName;?>Edit', $obj)
+      ->setDeleteRouter('Admin<?php echo $controllerName;?>Delete', $obj);
+});
+
+echo $table->pages();

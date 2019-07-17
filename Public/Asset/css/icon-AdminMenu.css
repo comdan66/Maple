@@ -1,0 +1,20 @@
+@font-face { font-family: "icon-AdminMenu"; src: url('../font/AdminMenu/fonts/icomoon.eot?1563291565') format('embedded-opentype'), url('../font/AdminMenu/fonts/icomoon.woff?1563291565') format('woff'), url('../font/AdminMenu/fonts/icomoon.ttf?1563291565') format('truetype'), url('../font/AdminMenu/fonts/icomoon.svg?1563291565') format('svg'); }
+*[class^="icon-AdminMenu-"]:before, *[class*=" icon-AdminMenu-"]:before { font-family: "icon-AdminMenu"; speak: none; font-style: normal; font-weight: normal; font-variant: normal; }
+
+.icon-AdminMenu-003:before { content: "\f003"; }
+
+.icon-AdminMenu-008:before { content: "\f008"; }
+
+.icon-AdminMenu-001:before { content: "\f001"; }
+
+.icon-AdminMenu-004:before { content: "\f004"; }
+
+.icon-AdminMenu-005:before { content: "\f005"; }
+
+.icon-AdminMenu-009:before { content: "\f009"; }
+
+.icon-AdminMenu-007:before { content: "\f007"; }
+
+.icon-AdminMenu-002:before { content: "\f002"; }
+
+.icon-AdminMenu-006:before { content: "\f006"; }
