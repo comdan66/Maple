@@ -92,7 +92,7 @@ class Admin extends AdminController {
       Validator::optional($params, 'password', '密碼')->isString(0, 190);
       Validator::optional($params, 'roles', '角色')->default([])->filter(array_keys(\M\AdminRole::ROLE));
 
-      \M\Admin::one('account = ?', $params['account']) && error('帳號已重複！');
+      $params['account'] != $this->obj->account && \M\Admin::one('account = ?', $params['account']) && error('帳號已重複！');
       if (isset($params['password'])) $params['password'] = password_hash($params['password'], PASSWORD_DEFAULT);
       else unset($params['password']);
 

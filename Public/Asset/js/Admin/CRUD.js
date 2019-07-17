@@ -166,23 +166,6 @@ $(function() {
     $(this).parent().toggleClass('show');
   });
 
-  $('form.form').submit(function() {
-    var $that = $(this);
-    if ($that.data('submited')) return false;
-    else $that.data('submited', true);
-    
-    $(this).find('input[type="checkbox"][data-off]').each(function() {
-      if ($(this).prop('checked') !== false) return ;
-      $that.prepend($('<input />').attr('type', 'hidden').attr('name', $(this).attr('name')).val($(this).data('off')));
-    });
-
-    $(this).find('input[type="text"], input[type="number"], input[type="email"], input[type="password"], input[type="date"], textarea').filter('[data-optional="true"]').filter(function() {
-      return $(this).val() === '';
-    }).removeAttr('name');
-
-    window.loading.show('請稍候..', 300);
-    return true;
-  });
 
   if (typeof $.fn.ckeditor !== 'undefined') {
     var filebrowserImageUploadUrl = $('#api-ckeditor-image-upload').val();
@@ -308,27 +291,27 @@ $(function() {
   }
 
   $('table.list form.editable[data-api][data-column]').each(function() {
-      var $that = $(this),
+    var $that = $(this),
         $span = $that.find('span'),
         $input = $that.find('input'),
         column = $that.data('column'),
         api = $that.data('api');
-      
-      $that.keyup(function() {
-        $that.get(0)._isEdited = true;
-      }).dblclick(function() {
-        window.timer.clean(api);
-        $that.attr('class', 'editable ing');
-        $input.removeAttr('readonly');
-        $input.focus();
-      }).submit(function() {
-        editableSubmit($that, $span, $input, api, column);
-        return false;
-      });
+    
+    $that.keyup(function() {
+      $that.get(0)._isEdited = true;
+    }).dblclick(function() {
+      window.timer.clean(api);
+      $that.attr('class', 'editable ing');
+      $input.removeAttr('readonly');
+      $input.focus();
+    }).submit(function() {
+      editableSubmit($that, $span, $input, api, column);
+      return false;
+    });
 
-      $input.blur(function() {
-        editableSubmit($that, $span, $input, api, column);
-      });
+    $input.blur(function() {
+      editableSubmit($that, $span, $input, api, column);
+    });
   });
 
   $('.switch.ajax[data-column][data-api][data-true][data-false]').each(function() {
@@ -373,6 +356,102 @@ $(function() {
       });
     });
   });
+
+  function addFomMultiRow($that, columns) {
+    var index = parseInt($that.data('index'), 10) + 1;
+    var $columns = columns.map(function(column) {
+      
+      return $('<label />').addClass('form-multi-column').css({'width': column.width}).append(
+        $('<input />').data('name', column.name).val(column.value).attr(column.attrs)
+        );
+    });
+    var $sort = $('<div />').addClass('form-multi-sort').append(
+      $('<label />').addClass('form-sort-up').click(function() {
+        var $row = $(this).closest('.form-multi-row');
+        var $rows = $that.find('.form-multi-row');
+        var $goal = $rows.eq($rows.index($row) - 1);
+        if (!$goal.length) return;
+        var $new = $goal.clone(true);
+        $new.insertAfter($row);
+        $goal.remove();
+      })).append(
+      $('<label />').addClass('form-sort-down').click(function() {
+        var $row = $(this).closest('.form-multi-row');
+        var $rows = $that.find('.form-multi-row');
+        var $goal = $rows.eq($rows.index($row) + 1);
+        if (!$goal.length) return;
+        var $new = $goal.clone(true);
+        $new.insertBefore($row);
+        $goal.remove();
+      }));
+
+    $that.data('index', index);
+
+    return $('<div />').addClass('form-multi-row').data('name', $that.data('name')).append($sort).append($columns).append($('<label />').addClass('form-multi-delete').click(function() { $(this).closest('.form-multi-row').remove(); }));
+  }
+
+  $('.form-multi-rows').each(function() {
+    var $that = $(this).data('index', -1);
+    var formats = $that.data('formats');
+
+    var $rows = $that.data('rows').map(function(columns) {
+      var tmps = formats.map(function(format) {
+        var val = format.value;
+
+        for (var j in columns)
+            if (format.name == j)
+              val = columns[j];
+
+        return $.extend({}, format, {value: val})
+      });
+      return addFomMultiRow($that, tmps);
+    });
+
+    var $add = $('<div />').addClass('form-multi-add').click(function() {
+      addFomMultiRow($that,  formats).insertBefore($(this)).find('input').first().focus();
+    });
+
+    $that.append($rows).append($add);
+  });
+
+  $('form.form').submit(function() {
+    var $that = $(this);
+    if ($that.data('submited')) return false;
+    else $that.data('submited', true);
+    
+    $(this).find('input[type="checkbox"][data-off]').each(function() {
+      if ($(this).prop('checked') !== false) return ;
+      $that.prepend($('<input />').attr('type', 'hidden').attr('name', $(this).attr('name')).val($(this).data('off')));
+    });
+
+    $('.form-multi-row').each(function() {
+      var index = $(this).index();
+      var name = $(this).data('name');
+      $(this).find('input').each(function() {
+        $(this).attr('name', name + '[' + index + '][' + $(this).data('name') + ']');
+      });
+    });
+
+    $(this).find('input[type="text"], input[type="number"], input[type="email"], input[type="password"], input[type="date"], textarea').filter('[data-optional="true"]').filter(function() {
+      return $(this).val() === '';
+    }).removeAttr('name');
+
+    var multiMust = $('.form-multi.must').filter(function() {
+      return $(this).find('.form-multi-row').filter(function() { return $(this).find('input[name]').length; }).length === 0;
+    }).map(function() {
+      return $(this).find('b').text()
+    }).toArray();
+
+    if (multiMust.length) {
+      alert('「' + multiMust[0] + '」' + '為必填，至少要有一筆資料！');
+      $that.data('submited', false);
+      return false;
+    }
+
+    window.loading.show('請稍候..', 300);
+    return true;
+  });
+
 
   mutiImg($('.multi-drop-imgs'));
   window.oaips.set('.show-medias', 'figure');

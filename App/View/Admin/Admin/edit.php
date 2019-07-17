@@ -12,11 +12,6 @@ echo $form->form(function($obj) {
        ->accept('image/*')
        ->val($obj->avatar);
 
-  Input::create('name', '名稱')
-       ->must()
-       ->focus()
-       ->val($obj->name);
-
   Input::create('account', '帳號')
        ->must()
        ->val($obj->account);
@@ -24,6 +19,11 @@ echo $form->form(function($obj) {
   Input::create('password', '密碼')
        ->type('password')
        ->val('');
+
+  Input::create('name', '名稱')
+       ->must()
+       ->focus()
+       ->val($obj->name);
 
   Checkbox::create('roles', '特別權限')
           ->items(\M\AdminRole::ROLE)

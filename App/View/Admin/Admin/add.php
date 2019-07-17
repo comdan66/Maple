@@ -11,16 +11,16 @@ echo $form->form(function() {
   Image::create('avatar', '頭像')
        ->accept('image/*');
 
-  Input::create('name', '名稱')
-       ->must()
-       ->focus();
-
   Input::create('account', '帳號')
        ->must();
 
   Input::create('password', '密碼')
        ->must()
        ->type('password');
+
+  Input::create('name', '名稱')
+       ->must()
+       ->focus();
 
   Checkbox::create('roles', '特別權限')
           ->items(\M\AdminRole::ROLE);

@@ -37,6 +37,7 @@ abstract class AdminController extends Controller {
                         ->addCSS('https://cdn.jsdelivr.net/npm/hack-font@3.3.0/build/web/hack.css')
                         ->addCSS('/Asset/css/icon-AdminMenu.css')
                         ->addCSS('/Asset/css/Admin/Layout.css')
+                        
                         ->addJS('/Asset/js/_/jQuery.js')
                         ->addJS('/Asset/js/_/jQueryUI.js')
                         ->addJS('/Asset/js/_/jQueryUJS.js')
@@ -45,8 +46,7 @@ abstract class AdminController extends Controller {
                         ->addJS('/Asset/js/_/Ckeditor/adapters/jquery.js')
                         ->addJS('/Asset/js/_/Ckeditor/plugins/tabletools/tableresize.js')
                         ->addJS('/Asset/js/_/Ckeditor/plugins/dropler/dropler.js')
-                        ->addJS('/Asset/js/Admin/Layout.js')
-                        ->addJS('/Asset/js/Admin/CRUD.js');
+                        ->addJS('/Asset/js/Admin/Layout.js');
 
     if (array_key_exists($theme = Session::getData('theme'), AdminController::THEME))
       $this->asset->addCSS('/Asset/css/Admin/Layout' . $theme . '.css');

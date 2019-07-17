@@ -21,7 +21,7 @@ abstract class Unit {
     $this->name($name);
   }
 
-  public static function create(string $name, string $title) {
+  public static function create(string $name, $title) {
     return new static($name, $title);
   }
   

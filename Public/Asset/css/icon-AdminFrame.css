@@ -1,5 +1,13 @@
-@font-face { font-family: "icon-AdminFrame"; src: url('../font/AdminFrame/fonts/icomoon.eot?1563273674') format('embedded-opentype'), url('../font/AdminFrame/fonts/icomoon.woff?1563273674') format('woff'), url('../font/AdminFrame/fonts/icomoon.ttf?1563273674') format('truetype'), url('../font/AdminFrame/fonts/icomoon.svg?1563273674') format('svg'); }
+@font-face { font-family: "icon-AdminFrame"; src: url('../font/AdminFrame/fonts/icomoon.eot?1563342530') format('embedded-opentype'), url('../font/AdminFrame/fonts/icomoon.woff?1563342530') format('woff'), url('../font/AdminFrame/fonts/icomoon.ttf?1563342530') format('truetype'), url('../font/AdminFrame/fonts/icomoon.svg?1563342530') format('svg'); }
 *[class^="icon-AdminFrame-"]:before, *[class*=" icon-AdminFrame-"]:before { font-family: "icon-AdminFrame"; speak: none; font-style: normal; font-weight: normal; font-variant: normal; }
+
+.icon-AdminFrame-01a:before { content: "\f001a"; }
+
+.icon-AdminFrame-01b:before { content: "\f001b"; }
+
+.icon-AdminFrame-01c:before { content: "\f001c"; }
+
+.icon-AdminFrame-01d:before { content: "\f001d"; }
 
 .icon-AdminFrame-001:before { content: "\f0001"; }
 
