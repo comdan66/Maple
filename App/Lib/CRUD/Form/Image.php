@@ -36,7 +36,7 @@ class Image extends Unit {
               'type' => 'file',
               'name' => $this->name,
               'accept' => $this->accept,
-              'required' => $this->val ? $this->must ? true : null : null
+              'required' => !$this->val ? $this->must ? true : null : null
             ]) . '/>';
         $return .= '</label>';
       $return .= '</div>';
