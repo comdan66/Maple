@@ -31,12 +31,9 @@ echo $form->form(function() {
 
        ->must()<?php
           }
-          if (isset($image['accept'])) { ?>
+          if ($image['accept']) { ?>
 
        ->accept('<?php echo $image['accept'];?>')<?php
-          } else { ?>
-
-       ->accept('image/*')<?php
           }?>;
 <?php   }
       }
@@ -48,11 +45,11 @@ echo $form->form(function() {
 
        ->must()<?php
           }
-          if (isset($text['type']) && $text['type'] != 'text') { ?>
-       
+          if ($text['type'] != 'text') { ?>
+
        ->type('<?php echo $text['type'];?>')<?php
           }
-          if (isset($text['focus']) && $text['focus']) { ?>
+          if ($text['focus']) { ?>
 
        ->focus()<?php
           } ?>;
@@ -66,11 +63,11 @@ echo $form->form(function() {
 
           ->must()<?php
           }
-          if (isset($textarea['type']) && $textarea['type'] != 'pure') { ?>
+          if ($textarea['type'] != 'pure') { ?>
 
           ->type('<?php echo $textarea['type'];?>')<?php
           }
-          if (isset($textarea['focus']) && $textarea['focus']) { ?>
+          if ($textarea['focus']) { ?>
 
           ->focus()<?php
           } ?>;

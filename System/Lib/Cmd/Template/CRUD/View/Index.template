@@ -14,8 +14,8 @@ use \CRUD\Table\Image    as Image;
 use \CRUD\Table\Switcher as Switcher;
 <?php } ?>
 use \CRUD\Table\Datetime as Datetime;
+<?php if ($parent) { ?>
 
-<?php if ($hasParent) { ?>
 echo $table->back();
 <?php } ?>
 
