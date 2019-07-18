@@ -157,7 +157,7 @@ $(function() {
 
       window.notify.$el.append($notify);
       window.timer.delay(100, function() { $notify.addClass('show'); });
-      // window.timer.delay(1000 * 10, function() { $close.click(); });
+      window.timer.delay(1000 * 10, function() { $close.click(); });
       return this;
     }
   };
