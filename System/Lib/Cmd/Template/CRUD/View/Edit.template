@@ -1,0 +1,82 @@
+
+<?php if ($texts) { ?>
+use \CRUD\Form\Input    as Input;
+<?php }
+      if ($images) { ?>
+use \CRUD\Form\Image    as Image;
+<?php }
+      if ($enable) { ?>
+use \CRUD\Form\Switcher as Switcher;
+<?php }
+      if ($textareas) { ?>
+use \CRUD\Form\Textarea as Textarea;
+<?php } ?>
+
+echo $form->back();
+
+echo $form->form(function($obj) {
+<?php if ($enable) { ?>
+
+  Switcher::create('enable', '啟用')
+          ->must()
+          ->on(<?php echo $modelName;?>::ENABLE_YES)
+          ->off(<?php echo $modelName;?>::ENABLE_NO)
+          ->val($obj->enable);
+<?php }
+      if ($images) {
+        foreach ($images as $image) { ?>
+
+  Image::create('<?php echo $image['name'];?>', '<?php echo $image['text'];?>')<?php
+          if ($image['must']) { ?>
+
+       ->must()<?php
+          }
+          if ($image['accept']) { ?>
+
+       ->accept('<?php echo $image['accept'];?>')<?php
+          }?>
+
+       ->val($obj-><?php echo $image['name'];?>);
+<?php   }
+      }
+      if ($texts) {
+        foreach ($texts as $text) { ?>
+
+  Input::create('<?php echo $text['name'];?>', '<?php echo $text['text'];?>')<?php
+          if ($text['must']) { ?>
+
+       ->must()<?php
+          }
+          if (isset($text['type']) && $text['type'] != 'text') { ?>
+
+       ->type('<?php echo $text['type'];?>')<?php
+          }
+          if (isset($text['focus']) && $text['focus']) { ?>
+
+       ->focus()<?php
+          } ?>
+
+       ->val($obj-><?php echo $text['name'];?>);
+<?php   }
+      }
+      if ($textareas) {
+        foreach ($textareas as $textarea) { ?>
+
+  Textarea::create('<?php echo $textarea['name'];?>', '<?php echo $textarea['text'];?>')<?php
+          if ($textarea['must']) { ?>
+
+          ->must()<?php
+          }
+          if (isset($textarea['type']) && $textarea['type'] != 'pure') { ?>
+
+          ->type('<?php echo $textarea['type'];?>')<?php
+          }
+          if (isset($textarea['focus']) && $textarea['focus']) { ?>
+
+          ->focus()<?php
+          } ?>
+
+          ->val($obj-><?php echo $textarea['name'];?>);
+<?php   }
+      } ?>
+});

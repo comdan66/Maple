@@ -1,0 +1,113 @@
+@font-face {
+  font-family: 'icomoon';
+  src:  url('fonts/icomoon.eot?w70tdb');
+  src:  url('fonts/icomoon.eot?w70tdb#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.ttf?w70tdb') format('truetype'),
+    url('fonts/icomoon.woff?w70tdb') format('woff'),
+    url('fonts/icomoon.svg?w70tdb#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'icomoon' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-01a:before {
+  content: "\f001a";
+}
+.icon-01b:before {
+  content: "\f001b";
+}
+.icon-01c:before {
+  content: "\f001c";
+}
+.icon-01d:before {
+  content: "\f001d";
+}
+.icon-001:before {
+  content: "\f0001";
+}
+.icon-002:before {
+  content: "\f0002";
+}
+.icon-003:before {
+  content: "\f0003";
+}
+.icon-004:before {
+  content: "\f0004";
+}
+.icon-005:before {
+  content: "\f0005";
+}
+.icon-006:before {
+  content: "\f0006";
+}
+.icon-007:before {
+  content: "\f0007";
+}
+.icon-008:before {
+  content: "\f0008";
+}
+.icon-009:before {
+  content: "\f0009";
+}
+.icon-00a:before {
+  content: "\f000a";
+}
+.icon-00b:before {
+  content: "\f000b";
+}
+.icon-00c:before {
+  content: "\f000c";
+}
+.icon-00d:before {
+  content: "\f000d";
+}
+.icon-00e:before {
+  content: "\f000e";
+}
+.icon-00f:before {
+  content: "\f000f";
+}
+.icon-010:before {
+  content: "\f0010";
+}
+.icon-011:before {
+  content: "\f0011";
+}
+.icon-012:before {
+  content: "\f0012";
+}
+.icon-013:before {
+  content: "\f0013";
+}
+.icon-014:before {
+  content: "\f0014";
+}
+.icon-015:before {
+  content: "\f0015";
+}
+.icon-016:before {
+  content: "\f0016";
+}
+.icon-017:before {
+  content: "\f0017";
+}
+.icon-018:before {
+  content: "\f0018";
+}
+.icon-019:before {
+  content: "\f0019";
+}

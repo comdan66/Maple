@@ -1,0 +1,237 @@
+
+use \CRUD\Form        as Form;
+use \CRUD\Show        as Show;
+use \CRUD\Table       as Table;
+use \CRUD\Table\Order as Order;
+
+class <?php echo $controllerName;?> extends <?php echo $dir;?>Controller {
+
+  public function __construct() {
+    parent::__construct();
+<?php if ($parent) { ?>
+
+    ifErrorTo('<?php echo $dir;?><?php echo $parentControllerName;?>Index');
+
+    $this->methodIn(function() {
+      return $this->parent = <?php echo $parentModelName;?>::one('id = ?', Router::param('<?php echo $parentModelFkey;?>'));
+    });
+
+    Router::aliasAppendParam('<?php echo $dir;?><?php echo $controllerName;?>', $this->parent);
+<?php } ?>
+
+    ifErrorTo('<?php echo $dir;?><?php echo $controllerName;?>Index');
+
+    $this->methodIn('edit', 'update', 'delete', 'show'<?php echo $enable ? ", 'enable'" : '';?>, function() {
+      return $this->obj = <?php echo $modelName;?>::one('id = ?', Router::param('id'));
+    });
+
+    $this->view->with('title', <?php echo $parent ? "['" . $parentTitle . "', '" . $title . "']" : "'" . $title . "'";?>)
+               ->with('currentMenuUrl', Url::router('<?php echo $dir;?><?php echo $parent ? $parentControllerName : $controllerName;?>Index'));
+  }
+
+  public function index() {
+<?php if ($parent) {
+        if ($sort) { ?>
+    $table = Table::create('<?php echo $modelName;?>', ['order' => Table\Order::desc('sort'), 'where' => ['<?php echo $parentModelFkey;?> = ?', $this->parent->id]])
+                  ->setAddRouter('<?php echo $dir;?><?php echo $controllerName;?>Add')
+                  ->setSortRouter('<?php echo $dir;?><?php echo $controllerName;?>Sort')
+                  ->setBackUrl(Url::router('<?php echo $dir;?><?php echo $parentControllerName;?>Show', $this->parent), '回內容頁');
+<?php   } else { ?>
+    $table = Table::create('<?php echo $modelName;?>', ['where' => ['<?php echo $parentModelFkey;?> = ?', $this->parent->id]])
+                  ->setAddRouter('<?php echo $dir;?><?php echo $controllerName;?>Add')
+                  ->setBackUrl(Url::router('<?php echo $dir;?><?php echo $parentControllerName;?>Show', $this->parent), '回內容頁');
+<?php   }
+      } else {
+        if ($sort) { ?>
+    $table = Table::create('<?php echo $modelName;?>', ['order' => Table\Order::desc('sort')])
+                  ->setAddRouter('<?php echo $dir;?><?php echo $controllerName;?>Add')
+                  ->setSortRouter('<?php echo $dir;?><?php echo $controllerName;?>Sort');
+<?php   } else { ?>
+    $table = Table::create('<?php echo $modelName;?>')
+                  ->setAddRouter('<?php echo $dir;?><?php echo $controllerName;?>Add');
+<?php   }
+      } ?>
+
+    return $this->view->with('table', $table);
+  }
+
+  public function add() {
+    $form = Form::create()
+                ->setBackRouter('<?php echo $dir;?><?php echo $controllerName;?>Index')
+                ->setActionRouter('<?php echo $dir;?><?php echo $controllerName;?>Create');
+
+    return $this->view->with('form', $form);
+  }
+
+  public function create() {
+    ifErrorTo('<?php echo $dir;?><?php echo $controllerName;?>Add');
+
+    $params = Input::ValidPost(function($params) {
+<?php if ($enable) { ?>
+      Validator::must($params, 'enable', '啟用')->inEnum(array_keys(<?php echo $modelName;?>::ENABLE));
+<?php }
+      foreach ($texts as $text) { ?>
+      <?php echo $text;?>
+<?php }
+      foreach ($textareas as $textarea) { ?>
+      <?php echo $textarea;?>
+<?php }
+      if ($sort) {
+        if ($parent) { ?>
+      if ($max = <?php echo $modelName;?>::one(['select' => 'sort' , 'order' => 'sort DESC', 'where' => ['<?php echo $parentModelFkey;?> = ?', $this->parent->id]]))
+        $params['sort'] = $max->sort + 1;
+      else
+        $params['sort'] = 1;
+      $params['<?php echo $parentModelFkey;?>'] = $this->parent->id;
+<?php   } else { ?>
+      if ($max = <?php echo $modelName;?>::one(['select' => 'sort' , 'order' => 'sort DESC']))
+        $params['sort'] = $max->sort + 1;
+      else
+        $params['sort'] = 1;
+<?php   }
+      } ?>
+      return $params;
+    });
+<?php if ($images) { ?>
+
+    $files = Input::ValidFile(function($files) {
+<?php foreach ($images as $image) { ?>
+      <?php echo implode('', $image);?>
+<?php } ?>
+      return $files;
+    });
+<?php } ?>
+
+<?php if ($images) { ?>
+    transaction(function() use (&$params, &$files) {
+      $obj = <?php echo $modelName;?>::create($params);
+      return $obj && $obj->putFiles($files);
+    });
+<?php } else { ?>
+    transaction(function() use (&$params) {
+      return <?php echo $modelName;?>::create($params);
+    });
+<?php } ?>
+
+    return Url::refreshWithSuccessFlash(Url::router('<?php echo $dir;?><?php echo $controllerName;?>Index'), '新增成功！');
+  }
+
+  public function edit() {
+    $form = Form::create($this->obj)
+                ->setBackRouter('<?php echo $dir;?><?php echo $controllerName;?>Index')
+                ->setActionRouter('<?php echo $dir;?><?php echo $controllerName;?>Update', $this->obj);
+    
+    return $this->view->with('form', $form);
+  }
+
+  public function update() {
+    ifErrorTo('<?php echo $dir;?><?php echo $controllerName;?>Edit', $this->obj);
+
+    $params = Input::ValidPost(function($params) {
+<?php if ($enable) { ?>
+      Validator::must($params, 'enable', '啟用')->inEnum(array_keys(<?php echo $modelName;?>::ENABLE));
+<?php }
+      foreach ($texts as $text) { ?>
+      <?php echo $text;?>
+<?php }
+      foreach ($textareas as $textarea) { ?>
+      <?php echo $textarea;?>
+<?php } ?>
+      return $params;
+    });
+<?php if ($images) { ?>
+
+    $files = Input::ValidFile(function($files) {
+<?php foreach ($images as $image) { ?>
+      Validator::optional<?php echo $image[1];?>
+<?php } ?>
+      return $files;
+    });
+<?php } ?>
+
+<?php if ($images) { ?>
+    transaction(function() use (&$params, &$files) {
+      return $this->obj->setColumns($params)
+          && $this->obj->putFiles($files)
+          && $this->obj->save();
+    });
+<?php } else { ?>
+    transaction(function() use (&$params) {
+      return $this->obj->setColumns($params)
+          && $this->obj->save();
+    });
+<?php } ?>
+    
+    return Url::refreshWithSuccessFlash(Url::router('<?php echo $dir;?><?php echo $controllerName;?>Index'), '修改成功！');
+  }
+
+  public function show() {
+    $show = Show::create($this->obj)
+                ->setBackRouter('<?php echo $dir;?><?php echo $controllerName;?>Index');
+    
+    return $this->view->with('show', $show);
+  }
+
+  public function delete() {
+    ifErrorTo('<?php echo $dir;?><?php echo $controllerName;?>Index');
+
+    transaction(function() {
+      return $this->obj->delete();
+    });
+
+    return Url::refreshWithSuccessFlash(Url::router('<?php echo $dir;?><?php echo $controllerName;?>Index'), '刪除成功！');
+  }
+<?php if ($sort) { ?>
+
+  public function sort() {
+    ifApiError(function() { return ['messages' => func_get_args()]; });
+
+    $params = Input::ValidPost(function($params) {
+      Validator::must($params, 'changes', '排序資料')->isArray(2)->map(function($param) {
+        if (!isset($param['id'], $param['ori'], $param['now']))
+          return null;
+
+        if (!$obj = <?php echo $modelName;?>::one(['select' => 'id,sort', 'where' => ['id = ? AND sort = ?', $param['id'], $param['ori']]]))
+          return null;
+
+        return ['obj' => $obj, 'sort' => $param['now']];
+      })->filter()->isArray(2);
+      return $params;
+    });
+
+    transaction(function() use (&$params) {
+      foreach ($params['changes'] as $change)
+        $change['obj']->sort = $change['sort'];
+
+      foreach ($params['changes'] as $change)
+        if (!$change['obj']->save())
+          return false;
+
+      return true;
+    });
+
+    return array_map(function($change) { return [
+      'id' => $change['obj']->id,
+      'sort' => $change['obj']->sort];
+    }, $params['changes']);
+  }
+<?php }
+      if ($enable) { ?>
+
+  public function enable() {
+    ifApiError(function() { return ['messages' => func_get_args()]; });
+
+    $params = Input::ValidPost(function($params) {
+      Validator::must($params, 'enable', '啟用')->inEnum(array_keys(<?php echo $modelName;?>::ENABLE));
+      return $params;
+    });
+
+    transaction(function() use (&$params) {
+      return $this->obj->setColumns($params)
+          && $this->obj->save();
+    });
+
+    return $params;
+  }
+<?php } ?>
+}
